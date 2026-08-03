@@ -4,9 +4,9 @@ Automatically published after each evaluation. Local workspace remains the sourc
 
 ## Evaluated (1)
 
-| model | provider | params | modality | release date | results |
+| model | provider | params | modality | release date | evaluations (rank/total, score) |
 | --- | --- | --- | --- | --- | --- |
-| [Qwen3.5-9B](https://huggingface.co/Qwen/Qwen3.5-9B) | Qwen | 10B | multimodal | 2026-02-27 | [image-captioning](tasks/image-captioning/qwen-qwen3-5-9b/) |
+| [Qwen3.5-9B](https://huggingface.co/Qwen/Qwen3.5-9B) | Qwen | 10B | multimodal | 2026-02-27 | [image-captioning](tasks/image-captioning/qwen-qwen3-5-9b/) #1/1 (4.08) |
 
 ## Pending (6)
 
