@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sieve — Model Evaluation Leaderboard</title>
+<style>
+  :root { color-scheme: light dark; }
+  body { font: 14px/1.5 system-ui, sans-serif; margin: 1.5rem; }
+  h1 { font-size: 1.3rem; margin: 0 0 .25rem; }
+  .sub { opacity: .7; margin: 0 0 1rem; }
+  .tasks { margin: 0 0 1rem; }
+  .tasks button { font: inherit; padding: .3rem .7rem; margin: 0 .3rem .3rem 0;
+    border: 1px solid #8886; border-radius: 6px; background: transparent; cursor: pointer; }
+  .tasks button.active { background: #4f8cff33; border-color: #4f8cff; font-weight: 600; }
+  table { border-collapse: collapse; width: 100%; }
+  th, td { padding: .4rem .6rem; border-bottom: 1px solid #8883; text-align: left;
+    vertical-align: top; }
+  th { position: sticky; top: 0; background: Canvas; cursor: pointer; user-select: none;
+    white-space: nowrap; }
+  th.sorted::after { content: " ▾"; }
+  th.sorted.asc::after { content: " ▴"; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  tbody tr:nth-child(even) { background: #8881; }
+  a { color: #4f8cff; text-decoration: none; }
+</style>
+</head>
+<body>
+<h1>Sieve — Model Evaluation Leaderboard</h1>
+<p class="sub">Click a column header to sort. Generated from the local eval runs; the
+per-model pages and downloadable spreadsheets live under <code>tasks/</code>.</p>
+<div class="tasks" id="tasks"></div>
+<table><thead><tr id="head"></tr></thead><tbody id="body"></tbody></table>
+<script>
+const DATA = {"tasks":[{"task":"image-captioning","mode":"standard","columns":[{"key":"rank","label":"rank"},{"key":"model","label":"model"},{"key":"score","label":"score"},{"key":"inference_time","label":"inference_time"},{"key":"hardware","label":"hardware"},{"key":"family","label":"family"},{"key":"eval_languages","label":"eval_languages"},{"key":"n_samples","label":"n_samples"},{"key":"token_f1","label":"token_f1"},{"key":"rouge_l","label":"rouge_l"},{"key":"meteor","label":"meteor"},{"key":"cider","label":"cider"},{"key":"bertscore","label":"bertscore"},{"key":"clipscore","label":"clipscore"},{"key":"judge_pass_rate","label":"llm_judge_pass_rate"},{"key":"judge_dim_Accuracy","label":"llm_judge_accuracy_mean_0_to_5"},{"key":"judge_dim_Coherence","label":"llm_judge_coherence_mean_0_to_5"},{"key":"judge_dim_Completeness","label":"llm_judge_completeness_mean_0_to_5"},{"key":"judge_dim_Specificity","label":"llm_judge_specificity_mean_0_to_5"},{"key":"judge_gate_Faithfulness","label":"llm_judge_faithfulness_mean_gate_score"},{"key":"safety_pass_rate","label":"llm_judge_safety_pass_rate"},{"key":"faithfulness_pass_rate","label":"llm_judge_faithfulness_pass_rate"},{"key":"mean_score","label":"llm_judge_dimension_mean_0_to_5"}],"rows":[{"rank":1,"__dir":"qwen-qwen3-5-9b","model":"qwen/qwen3.5-9b","score":4.1,"inference_time":"14.014s p50 e2e @ c=1 (self_hosted_gpu_colab)","hardware":"NVIDIA A100-SXM4-40GB (34.25 GB)","family":"generative-reference","eval_languages":"en","n_samples":20,"token_f1":0.2506,"rouge_l":0.1508,"meteor":0.3067,"cider":1.189,"bertscore":0.8125,"clipscore":0.7134,"judge_pass_rate":0.95,"judge_dim_Accuracy":3.767,"judge_dim_Coherence":4.7845,"judge_dim_Completeness":3.8995,"judge_dim_Specificity":3.9335,"judge_gate_Faithfulness":1.216,"safety_pass_rate":1.0,"faithfulness_pass_rate":0.95,"mean_score":4.1}]},{"task":"summarization","mode":"standard","columns":[{"key":"rank","label":"rank"},{"key":"model","label":"model"},{"key":"score","label":"score"},{"key":"inference_time","label":"inference_time"},{"key":"hardware","label":"hardware"},{"key":"family","label":"family"},{"key":"eval_languages","label":"eval_languages"},{"key":"n_samples","label":"n_samples"},{"key":"token_f1","label":"token_f1"},{"key":"rouge_l","label":"rouge_l"},{"key":"judge_pass_rate","label":"llm_judge_pass_rate"},{"key":"judge_dim_Coherence","label":"llm_judge_coherence_mean_0_to_5"},{"key":"judge_dim_Consistency","label":"llm_judge_consistency_mean_0_to_5"},{"key":"judge_dim_Fluency","label":"llm_judge_fluency_mean_0_to_5"},{"key":"judge_dim_Relevance","label":"llm_judge_relevance_mean_0_to_5"},{"key":"judge_gate_Faithfulness","label":"llm_judge_faithfulness_mean_gate_score"},{"key":"safety_pass_rate","label":"llm_judge_safety_pass_rate"},{"key":"faithfulness_pass_rate","label":"llm_judge_faithfulness_pass_rate"},{"key":"mean_score","label":"llm_judge_dimension_mean_0_to_5"}],"rows":[{"rank":1,"__dir":"qwen-qwen3-5-9b","model":"qwen/qwen3.5-9b","score":3.7,"inference_time":"19.031s p50 e2e @ c=1 (self_hosted_gpu_colab)","hardware":"NVIDIA A100-SXM4-40GB (34.17 GB)","family":"generative-reference","eval_languages":"","n_samples":200,"token_f1":0.3378,"rouge_l":0.1489,"judge_pass_rate":0.335,"judge_dim_Coherence":3.5751,"judge_dim_Consistency":3.9626,"judge_dim_Fluency":4.2516,"judge_dim_Relevance":3.0009,"judge_gate_Faithfulness":1.489,"safety_pass_rate":0.78,"faithfulness_pass_rate":0.415,"mean_score":3.7}]}]};
+const NUM = new Set(["rank", "n_samples"]);  // always numeric even if a value is null
+let cur = 0, sortKey = "rank", sortAsc = true;
+
+function isNumCol(key, rows) {
+  if (NUM.has(key)) return true;
+  return rows.some(r => typeof r[key] === "number");
+}
+function fmt(v) {
+  if (v === null || v === undefined || v === "") return "–";
+  if (typeof v === "number") return Number.isInteger(v) ? v : v.toFixed(2);
+  return String(v);
+}
+function cmp(a, b, num, asc) {
+  const an = a === null || a === undefined || a === "";
+  const bn = b === null || b === undefined || b === "";
+  if (an && bn) return 0;
+  if (an) return 1;            // empties last, regardless of sort direction
+  if (bn) return -1;
+  const d = num ? a - b : String(a).localeCompare(String(b));
+  return asc ? d : -d;         // direction applies only to real values
+}
+function render() {
+  const t = DATA.tasks[cur];
+  const cols = t.columns;
+  const rows = t.rows.slice();
+  const num = isNumCol(sortKey, rows);
+  rows.sort((r1, r2) => cmp(r1[sortKey], r2[sortKey], num, sortAsc));
+  document.getElementById("head").innerHTML = cols.map(c => {
+    const n = isNumCol(c.key, t.rows) ? " num" : "";
+    const s = c.key === sortKey ? " sorted" + (sortAsc ? " asc" : "") : "";
+    return `<th class="${n}${s}" data-k="${c.key}">${c.label}</th>`;
+  }).join("");
+  document.getElementById("body").innerHTML = rows.map(r => "<tr>" + cols.map(c => {
+    const n = isNumCol(c.key, t.rows) ? " class=num" : "";
+    let cell = fmt(r[c.key]);
+    if (c.key === "model" && r.__dir) {
+      cell = `<a href="tasks/${t.task}/${r.__dir}/">${cell}</a>`;
+    }
+    return `<td${n}>${cell}</td>`;
+  }).join("") + "</tr>").join("");
+  document.querySelectorAll("th").forEach(th => th.onclick = () => {
+    const k = th.dataset.k;
+    if (k === sortKey) sortAsc = !sortAsc; else { sortKey = k; sortAsc = true; }
+    render();
+  });
+}
+function renderTabs() {
+  const el = document.getElementById("tasks");
+  if (DATA.tasks.length <= 1) { el.style.display = "none"; return; }
+  el.innerHTML = DATA.tasks.map((t, i) =>
+    `<button class="${i === cur ? "active" : ""}" data-i="${i}">${t.task}${
+      t.mode !== "standard" ? " (" + t.mode + ")" : ""}</button>`).join("");
+  el.querySelectorAll("button").forEach(b => b.onclick = () => {
+    cur = +b.dataset.i; sortKey = "rank"; sortAsc = true; renderTabs(); render();
+  });
+}
+renderTabs(); render();
+</script>
+</body>
+</html>
