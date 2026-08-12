@@ -5,88 +5,156 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sieve — Model Evaluation Leaderboard</title>
 <style>
-  :root { color-scheme: light dark; }
-  body { font: 14px/1.5 system-ui, sans-serif; margin: 1.5rem; }
-  h1 { font-size: 1.3rem; margin: 0 0 .25rem; }
-  .sub { opacity: .7; margin: 0 0 1rem; }
-  .tasks { margin: 0 0 1rem; }
-  .tasks button { font: inherit; padding: .3rem .7rem; margin: 0 .3rem .3rem 0;
-    border: 1px solid #8886; border-radius: 6px; background: transparent; cursor: pointer; }
-  .tasks button.active { background: #4f8cff33; border-color: #4f8cff; font-weight: 600; }
-  table { border-collapse: collapse; width: 100%; }
-  th, td { padding: .4rem .6rem; border-bottom: 1px solid #8883; text-align: left;
-    vertical-align: top; }
-  th { position: sticky; top: 0; background: Canvas; cursor: pointer; user-select: none;
+  :root {
+    --bg: #f8fafc; --card: #ffffff; --ink: #0f172a; --muted: #64748b;
+    --line: #e2e8f0; --hover: #f1f5f9; --accent: #4f46e5; --accent-soft: #eef2ff;
+    --bar: #6366f1; --bar-track: #eef2ff; --shadow: 0 1px 3px rgba(15,23,42,.08),
+      0 8px 24px rgba(15,23,42,.06);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+    font: 14px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+  header { margin-bottom: 1.5rem; }
+  h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: -.02em; margin: 0 0 .3rem; }
+  .sub { color: var(--muted); margin: 0; font-size: .9rem; }
+  .tabs { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1.5rem 0 1rem; }
+  .tabs button { font: inherit; font-weight: 500; padding: .45rem .95rem; cursor: pointer;
+    border: 1px solid var(--line); border-radius: 999px; background: var(--card);
+    color: var(--muted); transition: all .15s ease; }
+  .tabs button:hover { border-color: #cbd5e1; color: var(--ink); }
+  .tabs button.active { background: var(--accent); border-color: var(--accent);
+    color: #fff; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+    box-shadow: var(--shadow); overflow: hidden; }
+  .scroll { overflow-x: auto; }
+  table { border-collapse: separate; border-spacing: 0; width: 100%; font-size: .875rem; }
+  thead th { position: sticky; top: 0; z-index: 1; background: var(--card);
+    text-align: left; font-weight: 600; font-size: .7rem; text-transform: uppercase;
+    letter-spacing: .06em; color: var(--muted); padding: .85rem 1rem;
+    border-bottom: 1px solid var(--line); cursor: pointer; user-select: none;
     white-space: nowrap; }
-  th.sorted::after { content: " ▾"; }
-  th.sorted.asc::after { content: " ▴"; }
+  thead th:hover { color: var(--ink); }
+  thead th.sorted { color: var(--accent); }
+  thead th .arrow { opacity: 0; margin-left: .25rem; }
+  thead th.sorted .arrow { opacity: 1; }
+  tbody td { padding: .7rem 1rem; border-bottom: 1px solid var(--line);
+    vertical-align: middle; white-space: nowrap; }
+  tbody tr:last-child td { border-bottom: 0; }
+  tbody tr { transition: background .12s ease; }
+  tbody tr:hover td { background: var(--hover); }
   td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
-  tbody tr:nth-child(even) { background: #8881; }
-  a { color: #4f8cff; text-decoration: none; }
+  td.model { font-weight: 600; }
+  td.model a { color: var(--accent); text-decoration: none; }
+  td.model a:hover { text-decoration: underline; }
+  .bar-cell { display: flex; align-items: center; gap: .55rem; justify-content: flex-end; }
+  .bar-track { flex: 1; max-width: 110px; height: 7px; border-radius: 999px;
+    background: var(--bar-track); overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 999px; background: var(--bar); }
+  .bar-val { font-variant-numeric: tabular-nums; min-width: 2.6em; text-align: right;
+    color: var(--ink); }
+  .muted { color: var(--muted); }
+  footer { color: var(--muted); font-size: .8rem; margin-top: 1.25rem; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #0b1120; --card: #0f172a; --ink: #e2e8f0; --muted: #94a3b8;
+      --line: #1e293b; --hover: #1e293b; --accent: #818cf8; --accent-soft: #1e1b4b;
+      --bar: #818cf8; --bar-track: #1e293b;
+      --shadow: 0 1px 3px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.3); }
+  }
 </style>
 </head>
 <body>
-<h1>Sieve — Model Evaluation Leaderboard</h1>
-<p class="sub">Click a column header to sort. Generated from the local eval runs; the
-per-model pages and downloadable spreadsheets live under <code>tasks/</code>.</p>
-<div class="tasks" id="tasks"></div>
+<div class="wrap">
+<header>
+  <h1>Sieve — Model Evaluation Leaderboard</h1>
+  <p class="sub">Judged across multiple metrics — no single "best" score. Click any
+  column to sort. Model names link to the full breakdown.</p>
+</header>
+<div class="tabs" id="tabs"></div>
+<div class="card"><div class="scroll">
 <table><thead><tr id="head"></tr></thead><tbody id="body"></tbody></table>
+</div></div>
+<footer>Generated from local eval runs. Per-model pages and downloadable spreadsheets
+live under <code>tasks/</code>.</footer>
+</div>
 <script>
-const DATA = {"tasks":[{"task":"image-captioning","mode":"standard","columns":[{"key":"rank","label":"rank"},{"key":"model","label":"model"},{"key":"score","label":"score"},{"key":"inference_time","label":"inference_time"},{"key":"hardware","label":"hardware"},{"key":"family","label":"family"},{"key":"eval_languages","label":"eval_languages"},{"key":"n_samples","label":"n_samples"},{"key":"token_f1","label":"token_f1"},{"key":"rouge_l","label":"rouge_l"},{"key":"meteor","label":"meteor"},{"key":"cider","label":"cider"},{"key":"bertscore","label":"bertscore"},{"key":"clipscore","label":"clipscore"},{"key":"judge_pass_rate","label":"llm_judge_pass_rate"},{"key":"judge_dim_Accuracy","label":"llm_judge_accuracy_mean_0_to_5"},{"key":"judge_dim_Coherence","label":"llm_judge_coherence_mean_0_to_5"},{"key":"judge_dim_Completeness","label":"llm_judge_completeness_mean_0_to_5"},{"key":"judge_dim_Specificity","label":"llm_judge_specificity_mean_0_to_5"},{"key":"judge_gate_Faithfulness","label":"llm_judge_faithfulness_mean_gate_score"},{"key":"safety_pass_rate","label":"llm_judge_safety_pass_rate"},{"key":"faithfulness_pass_rate","label":"llm_judge_faithfulness_pass_rate"},{"key":"mean_score","label":"llm_judge_dimension_mean_0_to_5"}],"rows":[{"rank":1,"__dir":"qwen-qwen3-5-9b","model":"qwen/qwen3.5-9b","score":4.1,"inference_time":"14.014s p50 e2e @ c=1 (self_hosted_gpu_colab)","hardware":"NVIDIA A100-SXM4-40GB (34.25 GB)","family":"generative-reference","eval_languages":"en","n_samples":20,"token_f1":0.2506,"rouge_l":0.1508,"meteor":0.3067,"cider":1.189,"bertscore":0.8125,"clipscore":0.7134,"judge_pass_rate":0.95,"judge_dim_Accuracy":3.767,"judge_dim_Coherence":4.7845,"judge_dim_Completeness":3.8995,"judge_dim_Specificity":3.9335,"judge_gate_Faithfulness":1.216,"safety_pass_rate":1.0,"faithfulness_pass_rate":0.95,"mean_score":4.1}]},{"task":"summarization","mode":"standard","columns":[{"key":"rank","label":"rank"},{"key":"model","label":"model"},{"key":"score","label":"score"},{"key":"inference_time","label":"inference_time"},{"key":"hardware","label":"hardware"},{"key":"family","label":"family"},{"key":"eval_languages","label":"eval_languages"},{"key":"n_samples","label":"n_samples"},{"key":"token_f1","label":"token_f1"},{"key":"rouge_l","label":"rouge_l"},{"key":"judge_pass_rate","label":"llm_judge_pass_rate"},{"key":"judge_dim_Coherence","label":"llm_judge_coherence_mean_0_to_5"},{"key":"judge_dim_Consistency","label":"llm_judge_consistency_mean_0_to_5"},{"key":"judge_dim_Fluency","label":"llm_judge_fluency_mean_0_to_5"},{"key":"judge_dim_Relevance","label":"llm_judge_relevance_mean_0_to_5"},{"key":"judge_gate_Faithfulness","label":"llm_judge_faithfulness_mean_gate_score"},{"key":"safety_pass_rate","label":"llm_judge_safety_pass_rate"},{"key":"faithfulness_pass_rate","label":"llm_judge_faithfulness_pass_rate"},{"key":"mean_score","label":"llm_judge_dimension_mean_0_to_5"}],"rows":[{"rank":1,"__dir":"qwen-qwen3-5-9b","model":"qwen/qwen3.5-9b","score":3.7,"inference_time":"19.031s p50 e2e @ c=1 (self_hosted_gpu_colab)","hardware":"NVIDIA A100-SXM4-40GB (34.17 GB)","family":"generative-reference","eval_languages":"","n_samples":200,"token_f1":0.3378,"rouge_l":0.1489,"judge_pass_rate":0.335,"judge_dim_Coherence":3.5751,"judge_dim_Consistency":3.9626,"judge_dim_Fluency":4.2516,"judge_dim_Relevance":3.0009,"judge_gate_Faithfulness":1.489,"safety_pass_rate":0.78,"faithfulness_pass_rate":0.415,"mean_score":3.7}]}]};
-const NUM = new Set(["rank", "n_samples"]);  // always numeric even if a value is null
-let cur = 0, sortKey = "rank", sortAsc = true;
+const DATA = {"tasks":[{"task":"image-captioning","mode":"standard","columns":[{"key":"model","label":"model"},{"key":"inference_time","label":"inference_time"},{"key":"hardware","label":"hardware"},{"key":"family","label":"family"},{"key":"eval_languages","label":"eval_languages"},{"key":"n_samples","label":"n_samples"},{"key":"token_f1","label":"token_f1"},{"key":"rouge_l","label":"rouge_l"},{"key":"meteor","label":"meteor"},{"key":"cider","label":"cider"},{"key":"bertscore","label":"bertscore"},{"key":"clipscore","label":"clipscore"},{"key":"judge_pass_rate","label":"llm_judge_pass_rate"},{"key":"judge_dim_Accuracy","label":"llm_judge_accuracy_mean_0_to_5"},{"key":"judge_dim_Coherence","label":"llm_judge_coherence_mean_0_to_5"},{"key":"judge_dim_Completeness","label":"llm_judge_completeness_mean_0_to_5"},{"key":"judge_dim_Specificity","label":"llm_judge_specificity_mean_0_to_5"},{"key":"judge_gate_Faithfulness","label":"llm_judge_faithfulness_mean_gate_score"},{"key":"safety_pass_rate","label":"llm_judge_safety_pass_rate"},{"key":"faithfulness_pass_rate","label":"llm_judge_faithfulness_pass_rate"},{"key":"mean_score","label":"llm_judge_dimension_mean_0_to_5"}],"rows":[{"__dir":"qwen-qwen3-5-9b","model":"qwen/qwen3.5-9b","inference_time":"14.014s p50 e2e @ c=1 (self_hosted_gpu_colab)","hardware":"NVIDIA A100-SXM4-40GB (34.25 GB)","family":"generative-reference","eval_languages":"en","n_samples":20,"token_f1":0.2506,"rouge_l":0.1508,"meteor":0.3067,"cider":1.189,"bertscore":0.8125,"clipscore":0.7134,"judge_pass_rate":0.95,"judge_dim_Accuracy":3.767,"judge_dim_Coherence":4.7845,"judge_dim_Completeness":3.8995,"judge_dim_Specificity":3.9335,"judge_gate_Faithfulness":1.216,"safety_pass_rate":1.0,"faithfulness_pass_rate":0.95,"mean_score":4.1}]},{"task":"summarization","mode":"standard","columns":[{"key":"model","label":"model"},{"key":"inference_time","label":"inference_time"},{"key":"hardware","label":"hardware"},{"key":"family","label":"family"},{"key":"eval_languages","label":"eval_languages"},{"key":"n_samples","label":"n_samples"},{"key":"token_f1","label":"token_f1"},{"key":"rouge_l","label":"rouge_l"},{"key":"judge_pass_rate","label":"llm_judge_pass_rate"},{"key":"judge_dim_Coherence","label":"llm_judge_coherence_mean_0_to_5"},{"key":"judge_dim_Consistency","label":"llm_judge_consistency_mean_0_to_5"},{"key":"judge_dim_Fluency","label":"llm_judge_fluency_mean_0_to_5"},{"key":"judge_dim_Relevance","label":"llm_judge_relevance_mean_0_to_5"},{"key":"judge_gate_Faithfulness","label":"llm_judge_faithfulness_mean_gate_score"},{"key":"safety_pass_rate","label":"llm_judge_safety_pass_rate"},{"key":"faithfulness_pass_rate","label":"llm_judge_faithfulness_pass_rate"},{"key":"mean_score","label":"llm_judge_dimension_mean_0_to_5"}],"rows":[{"__dir":"qwen-qwen3-5-9b","model":"qwen/qwen3.5-9b","inference_time":"19.031s p50 e2e @ c=1 (self_hosted_gpu_colab)","hardware":"NVIDIA A100-SXM4-40GB (34.17 GB)","family":"generative-reference","eval_languages":"","n_samples":200,"token_f1":0.3378,"rouge_l":0.1489,"judge_pass_rate":0.335,"judge_dim_Coherence":3.5751,"judge_dim_Consistency":3.9626,"judge_dim_Fluency":4.2516,"judge_dim_Relevance":3.0009,"judge_gate_Faithfulness":1.489,"safety_pass_rate":0.78,"faithfulness_pass_rate":0.415,"mean_score":3.7}]}]};
+// Columns rendered as an inline progress bar: {max} sets the full-scale value.
+const BARS = [
+  { test: k => /pass_rate$/.test(k), max: 1 },
+  { test: k => /^judge_dim_/.test(k) || k === "mean_score", max: 5 },
+  { test: k => /^judge_gate_/.test(k), max: 2 },
+];
+let cur = 0, sortKey = null, sortAsc = false;  // null = keep delivered (best-first) order
 
+function barSpec(key) { return BARS.find(b => b.test(key)); }
 function isNumCol(key, rows) {
-  if (NUM.has(key)) return true;
+  if (key === "n_samples") return true;
   return rows.some(r => typeof r[key] === "number");
 }
 function fmt(v) {
   if (v === null || v === undefined || v === "") return "–";
-  if (typeof v === "number") return Number.isInteger(v) ? v : v.toFixed(2);
+  if (typeof v === "number") return Number.isInteger(v) ? String(v) : v.toFixed(2);
   return String(v);
 }
 function cmp(a, b, num, asc) {
   const an = a === null || a === undefined || a === "";
   const bn = b === null || b === undefined || b === "";
   if (an && bn) return 0;
-  if (an) return 1;            // empties last, regardless of sort direction
+  if (an) return 1;            // empties last, regardless of direction
   if (bn) return -1;
   const d = num ? a - b : String(a).localeCompare(String(b));
   return asc ? d : -d;         // direction applies only to real values
+}
+function cell(r, c, t) {
+  const v = r[c.key];
+  if (c.key === "model") {
+    const name = fmt(v);
+    return r.__dir ? `<a href="tasks/${t.task}/${r.__dir}/">${name}</a>` : name;
+  }
+  const spec = barSpec(c.key);
+  if (spec && typeof v === "number") {
+    const pct = Math.max(0, Math.min(100, (v / spec.max) * 100));
+    const label = spec.max === 1 ? (v * 100).toFixed(0) + "%" : v.toFixed(2);
+    return `<div class="bar-cell" role="img" aria-label="${c.label}: ${label}">`
+      + `<div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div>`
+      + `<span class="bar-val">${label}</span></div>`;
+  }
+  return fmt(v);
 }
 function render() {
   const t = DATA.tasks[cur];
   const cols = t.columns;
   const rows = t.rows.slice();
-  const num = isNumCol(sortKey, rows);
-  rows.sort((r1, r2) => cmp(r1[sortKey], r2[sortKey], num, sortAsc));
+  if (sortKey) rows.sort((r1, r2) => cmp(r1[sortKey], r2[sortKey], isNumCol(sortKey, t.rows), sortAsc));
   document.getElementById("head").innerHTML = cols.map(c => {
-    const n = isNumCol(c.key, t.rows) ? " num" : "";
-    const s = c.key === sortKey ? " sorted" + (sortAsc ? " asc" : "") : "";
-    return `<th class="${n}${s}" data-k="${c.key}">${c.label}</th>`;
+    const numeric = isNumCol(c.key, t.rows) || barSpec(c.key);
+    const n = numeric ? " num" : "";
+    const sorted = c.key === sortKey ? " sorted" : "";
+    const arrow = c.key === sortKey ? (sortAsc ? "▲" : "▼") : "";
+    return `<th class="${n}${sorted}" data-k="${c.key}">${c.label}`
+      + `<span class="arrow">${arrow}</span></th>`;
   }).join("");
   document.getElementById("body").innerHTML = rows.map(r => "<tr>" + cols.map(c => {
-    const n = isNumCol(c.key, t.rows) ? " class=num" : "";
-    let cell = fmt(r[c.key]);
-    if (c.key === "model" && r.__dir) {
-      cell = `<a href="tasks/${t.task}/${r.__dir}/">${cell}</a>`;
-    }
-    return `<td${n}>${cell}</td>`;
+    const cls = c.key === "model" ? "model"
+      : (isNumCol(c.key, t.rows) || barSpec(c.key)) ? "num" : "";
+    return `<td class="${cls}">${cell(r, c, t)}</td>`;
   }).join("") + "</tr>").join("");
   document.querySelectorAll("th").forEach(th => th.onclick = () => {
     const k = th.dataset.k;
-    if (k === sortKey) sortAsc = !sortAsc; else { sortKey = k; sortAsc = true; }
+    if (k === sortKey) sortAsc = !sortAsc; else { sortKey = k; sortAsc = false; }
     render();
   });
 }
 function renderTabs() {
-  const el = document.getElementById("tasks");
+  const el = document.getElementById("tabs");
   if (DATA.tasks.length <= 1) { el.style.display = "none"; return; }
   el.innerHTML = DATA.tasks.map((t, i) =>
     `<button class="${i === cur ? "active" : ""}" data-i="${i}">${t.task}${
       t.mode !== "standard" ? " (" + t.mode + ")" : ""}</button>`).join("");
   el.querySelectorAll("button").forEach(b => b.onclick = () => {
-    cur = +b.dataset.i; sortKey = "rank"; sortAsc = true; renderTabs(); render();
+    cur = +b.dataset.i; sortKey = null; sortAsc = false; renderTabs(); render();
   });
 }
 renderTabs(); render();
