@@ -11,20 +11,20 @@ Over recent months, we have intensified our focus on developing foundation model
 | field | value |
 | --- | --- |
 | LLM judge pass rate | 0.95 |
-| LLM judge mean (0–5) | 4.08 |
+| LLM judge mean (0–5) | 4.1 |
 | Samples | 20 |
 | Frozen sample | 4704ecefa02e |
-| Assessment | The model generally provides accurate descriptions of images but occasionally introduces minor inaccuracies or hallucinations, particularly in details like object orientations, specific text, and structural elements, without a clear recurring edge case. |
+| Assessment | The model demonstrates inconsistent accuracy in image captioning, occasionally introducing hallucinations such as incorrect structures or object details, but does not exhibit a clear recurring edge case across the samples. |
 | Inference time | 14.014s p50 e2e @ c=1 (self_hosted_gpu_colab) |
-| Hardware | NVIDIA A100-SXM4-40GB (39.49 GB) |
+| Hardware | NVIDIA A100-SXM4-40GB (34.25 GB) |
 
 ## Metrics
 
 | metric | value |
 | --- | --- |
-| token_f1 | 0.2515 |
-| rouge_l | 0.1511 |
-| meteor | 0.3064 |
-| cider | 1.1643 |
-| bertscore | 0.8135 |
-| clipscore | 0.7072 |
+| token_f1 | 0.2506 |
+| rouge_l | 0.1508 |
+| meteor | 0.3067 |
+| cider | 1.189 |
+| bertscore | 0.8125 |
+| clipscore | 0.7134 |
