@@ -79,7 +79,7 @@
 live under <code>tasks/</code>.</footer>
 </div>
 <script>
-const DATA = {"tasks":[{"task":"image-captioning","mode":"standard","columns":[{"key":"model","label":"model"},{"key":"inference_time","label":"inference_time"},{"key":"hardware","label":"hardware"},{"key":"family","label":"family"},{"key":"eval_languages","label":"eval_languages"},{"key":"n_samples","label":"n_samples"},{"key":"token_f1","label":"token_f1"},{"key":"rouge_l","label":"rouge_l"},{"key":"meteor","label":"meteor"},{"key":"cider","label":"cider"},{"key":"bertscore","label":"bertscore"},{"key":"clipscore","label":"clipscore"},{"key":"judge_pass_rate","label":"llm_judge_pass_rate"},{"key":"judge_dim_Accuracy","label":"llm_judge_accuracy_mean_0_to_5"},{"key":"judge_dim_Coherence","label":"llm_judge_coherence_mean_0_to_5"},{"key":"judge_dim_Completeness","label":"llm_judge_completeness_mean_0_to_5"},{"key":"judge_dim_Specificity","label":"llm_judge_specificity_mean_0_to_5"},{"key":"judge_gate_Faithfulness","label":"llm_judge_faithfulness_mean_gate_score"},{"key":"safety_pass_rate","label":"llm_judge_safety_pass_rate"},{"key":"faithfulness_pass_rate","label":"llm_judge_faithfulness_pass_rate"},{"key":"mean_score","label":"llm_judge_dimension_mean_0_to_5"}],"rows":[{"__dir":"qwen-qwen3-5-9b","model":"qwen/qwen3.5-9b","inference_time":"14.014s p50 e2e @ c=1 (self_hosted_gpu_colab)","hardware":"NVIDIA A100-SXM4-40GB (34.25 GB)","family":"generative-reference","eval_languages":"en","n_samples":20,"token_f1":0.2506,"rouge_l":0.1508,"meteor":0.3067,"cider":1.189,"bertscore":0.8125,"clipscore":0.7134,"judge_pass_rate":0.95,"judge_dim_Accuracy":3.767,"judge_dim_Coherence":4.7845,"judge_dim_Completeness":3.8995,"judge_dim_Specificity":3.9335,"judge_gate_Faithfulness":1.216,"safety_pass_rate":1.0,"faithfulness_pass_rate":0.95,"mean_score":4.1,"__inference_time_s":14.014}]},{"task":"summarization","mode":"standard","columns":[{"key":"model","label":"model"},{"key":"inference_time","label":"inference_time"},{"key":"hardware","label":"hardware"},{"key":"family","label":"family"},{"key":"eval_languages","label":"eval_languages"},{"key":"n_samples","label":"n_samples"},{"key":"token_f1","label":"token_f1"},{"key":"rouge_l","label":"rouge_l"},{"key":"judge_pass_rate","label":"llm_judge_pass_rate"},{"key":"judge_dim_Coherence","label":"llm_judge_coherence_mean_0_to_5"},{"key":"judge_dim_Consistency","label":"llm_judge_consistency_mean_0_to_5"},{"key":"judge_dim_Fluency","label":"llm_judge_fluency_mean_0_to_5"},{"key":"judge_dim_Relevance","label":"llm_judge_relevance_mean_0_to_5"},{"key":"judge_gate_Faithfulness","label":"llm_judge_faithfulness_mean_gate_score"},{"key":"safety_pass_rate","label":"llm_judge_safety_pass_rate"},{"key":"faithfulness_pass_rate","label":"llm_judge_faithfulness_pass_rate"},{"key":"mean_score","label":"llm_judge_dimension_mean_0_to_5"}],"rows":[{"__dir":"qwen-qwen3-5-9b","model":"qwen/qwen3.5-9b","inference_time":"19.031s p50 e2e @ c=1 (self_hosted_gpu_colab)","hardware":"NVIDIA A100-SXM4-40GB (34.17 GB)","family":"generative-reference","eval_languages":"","n_samples":200,"token_f1":0.3378,"rouge_l":0.1489,"judge_pass_rate":0.335,"judge_dim_Coherence":3.5751,"judge_dim_Consistency":3.9626,"judge_dim_Fluency":4.2516,"judge_dim_Relevance":3.0009,"judge_gate_Faithfulness":1.489,"safety_pass_rate":0.78,"faithfulness_pass_rate":0.415,"mean_score":3.7,"__inference_time_s":19.031}]}]};
+const DATA = {"tasks":[{"task":"image-captioning","mode":"standard","columns":[{"key":"model","label":"model"},{"key":"inference_time","label":"inference p50 e2e (s) @ c=1, self_hosted_gpu_colab"},{"key":"hardware","label":"hardware"},{"key":"family","label":"family"},{"key":"eval_languages","label":"eval_languages"},{"key":"n_samples","label":"n_samples"},{"key":"token_f1","label":"token_f1"},{"key":"rouge_l","label":"rouge_l"},{"key":"meteor","label":"meteor"},{"key":"cider","label":"cider"},{"key":"bertscore","label":"bertscore"},{"key":"clipscore","label":"clipscore"},{"key":"judge_pass_rate","label":"llm_judge_pass_rate"},{"key":"judge_dim_Accuracy","label":"llm_judge_accuracy_mean_0_to_5"},{"key":"judge_dim_Coherence","label":"llm_judge_coherence_mean_0_to_5"},{"key":"judge_dim_Completeness","label":"llm_judge_completeness_mean_0_to_5"},{"key":"judge_dim_Specificity","label":"llm_judge_specificity_mean_0_to_5"},{"key":"judge_gate_Faithfulness","label":"llm_judge_faithfulness_mean_gate_score"},{"key":"safety_pass_rate","label":"llm_judge_safety_pass_rate"},{"key":"faithfulness_pass_rate","label":"llm_judge_faithfulness_pass_rate"},{"key":"mean_score","label":"llm_judge_dimension_mean_0_to_5"}],"rows":[{"__dir":"qwen-qwen3-5-9b","model":"qwen/qwen3.5-9b","inference_time":14.014,"hardware":"NVIDIA A100-SXM4-40GB (34.25 GB)","family":"generative-reference","eval_languages":"en","n_samples":20,"token_f1":0.2506,"rouge_l":0.1508,"meteor":0.3067,"cider":1.189,"bertscore":0.8125,"clipscore":0.7134,"judge_pass_rate":0.95,"judge_dim_Accuracy":3.767,"judge_dim_Coherence":4.7845,"judge_dim_Completeness":3.8995,"judge_dim_Specificity":3.9335,"judge_gate_Faithfulness":1.216,"safety_pass_rate":1.0,"faithfulness_pass_rate":0.95,"mean_score":4.1}]},{"task":"summarization","mode":"standard","columns":[{"key":"model","label":"model"},{"key":"inference_time","label":"inference p50 e2e (s) @ c=1, self_hosted_gpu_colab"},{"key":"hardware","label":"hardware"},{"key":"family","label":"family"},{"key":"eval_languages","label":"eval_languages"},{"key":"n_samples","label":"n_samples"},{"key":"token_f1","label":"token_f1"},{"key":"rouge_l","label":"rouge_l"},{"key":"judge_pass_rate","label":"llm_judge_pass_rate"},{"key":"judge_dim_Coherence","label":"llm_judge_coherence_mean_0_to_5"},{"key":"judge_dim_Consistency","label":"llm_judge_consistency_mean_0_to_5"},{"key":"judge_dim_Fluency","label":"llm_judge_fluency_mean_0_to_5"},{"key":"judge_dim_Relevance","label":"llm_judge_relevance_mean_0_to_5"},{"key":"judge_gate_Faithfulness","label":"llm_judge_faithfulness_mean_gate_score"},{"key":"safety_pass_rate","label":"llm_judge_safety_pass_rate"},{"key":"faithfulness_pass_rate","label":"llm_judge_faithfulness_pass_rate"},{"key":"mean_score","label":"llm_judge_dimension_mean_0_to_5"}],"rows":[{"__dir":"qwen-qwen3-5-9b","model":"qwen/qwen3.5-9b","inference_time":19.031,"hardware":"NVIDIA A100-SXM4-40GB (34.17 GB)","family":"generative-reference","eval_languages":"","n_samples":200,"token_f1":0.3378,"rouge_l":0.1489,"judge_pass_rate":0.335,"judge_dim_Coherence":3.5751,"judge_dim_Consistency":3.9626,"judge_dim_Fluency":4.2516,"judge_dim_Relevance":3.0009,"judge_gate_Faithfulness":1.489,"safety_pass_rate":0.78,"faithfulness_pass_rate":0.415,"mean_score":3.7}]}]};
 // Columns rendered as an inline progress bar: {max} sets the full-scale value.
 const BARS = [
   { test: k => /pass_rate$/.test(k), max: 1 },
@@ -88,15 +88,10 @@ const BARS = [
 ];
 let cur = 0, sortKey = null, sortAsc = false;  // null = keep delivered (best-first) order
 
-// Columns whose display value is a string but which sort by a hidden numeric field.
-const SORT_KEY = { inference_time: "__inference_time_s" };
 function barSpec(key) { return BARS.find(b => b.test(key)); }
-function isNumCol(key, rows) {  // sorts numerically
-  if (key === "n_samples" || key in SORT_KEY) return true;
+function isNumCol(key, rows) {
+  if (key === "n_samples") return true;
   return rows.some(r => typeof r[key] === "number");
-}
-function isNumDisplay(key, rows) {  // right-align + tabular digits (excludes string displays)
-  return !(key in SORT_KEY) && isNumCol(key, rows);
 }
 function fmt(v) {
   if (v === null || v === undefined || v === "") return "–";
@@ -132,13 +127,9 @@ function render() {
   const t = DATA.tasks[cur];
   const cols = t.columns;
   const rows = t.rows.slice();
-  if (sortKey) {
-    const sk = SORT_KEY[sortKey] || sortKey;
-    const num = isNumCol(sortKey, t.rows);
-    rows.sort((r1, r2) => cmp(r1[sk], r2[sk], num, sortAsc));
-  }
+  if (sortKey) rows.sort((r1, r2) => cmp(r1[sortKey], r2[sortKey], isNumCol(sortKey, t.rows), sortAsc));
   document.getElementById("head").innerHTML = cols.map(c => {
-    const numeric = isNumDisplay(c.key, t.rows) || barSpec(c.key);
+    const numeric = isNumCol(c.key, t.rows) || barSpec(c.key);
     const n = numeric ? " num" : "";
     const sorted = c.key === sortKey ? " sorted" : "";
     const arrow = c.key === sortKey ? (sortAsc ? "▲" : "▼") : "";
@@ -147,7 +138,7 @@ function render() {
   }).join("");
   document.getElementById("body").innerHTML = rows.map(r => "<tr>" + cols.map(c => {
     const cls = c.key === "model" ? "model"
-      : (isNumDisplay(c.key, t.rows) || barSpec(c.key)) ? "num" : "";
+      : (isNumCol(c.key, t.rows) || barSpec(c.key)) ? "num" : "";
     return `<td class="${cls}">${cell(r, c, t)}</td>`;
   }).join("") + "</tr>").join("");
   document.querySelectorAll("th").forEach(th => th.onclick = () => {
