@@ -302,7 +302,11 @@ function datasetLi(d) {
 function taskCard(t) {
   const krow = (k, v) => v ? `<dt>${k}</dt><dd>${v}</dd>` : "";
   const section = (title, inner) => inner ? `<section><h3>${title}</h3>${inner}</section>` : "";
-  const langs = t.languages.length ? chips(t.languages) : `<span class="chip plain">language-agnostic</span>`;
+  // Chip color carries meaning, consistently: ACCENT = what it measures / how it's
+  // scored (family, dimensions, gates, metrics); PLAIN/grey = where it applies / who
+  // runs it (modalities, capabilities, languages, judges).
+  const langs = t.languages.length ? chips(t.languages, "plain")
+    : `<span class="chip plain">language-agnostic</span>`;
   const ds = (t.datasets || []).map(datasetLi).join("");
   const rubric = t.rubric
     ? `<details class="rubric"><summary>Judge rubric</summary><pre>${esc(t.rubric)}</pre></details>` : "";
@@ -317,10 +321,10 @@ function taskCard(t) {
       ${krow("Scoring", t.scoring_method ? esc(t.scoring_method) : "")}
     </dl>
     ${section("Datasets", ds ? `<ul class="dslist">${ds}</ul>` : "")}
-    ${section("Judged on", (chips(t.dimensions) + chips(t.gates, "plain"))
-      && `<div class="chips">${chips(t.dimensions)}${chips(t.gates, "plain")}</div>${rubric}`)}
+    ${section("Judged on", (chips(t.dimensions) + chips(t.gates))
+      && `<div class="chips">${chips(t.dimensions)}${chips(t.gates)}</div>${rubric}`)}
     ${section("Judges", chips(t.judge_models, "plain"))}
-    ${section("Metrics", chips(t.metrics, "plain"))}
+    ${section("Metrics", chips(t.metrics))}
   </div>`;
 }
 function renderTasks() {
