@@ -101,12 +101,14 @@
   .taskcard .tid { font-size: .72rem; color: var(--muted); font-family: ui-monospace,
     SFMono-Regular, Menlo, monospace; }
   .taskcard .desc { color: var(--ink); font-size: .875rem; margin: .6rem 0 .9rem; }
-  /* min-width:0 lets the flex row shrink below its content so long chips wrap
-     inside the card instead of forcing horizontal overflow. */
-  .chips { display: flex; flex-wrap: wrap; gap: .35rem; margin: .35rem 0; min-width: 0; }
+  /* min-width:0 lets the flex row shrink below its content so chips wrap inside the
+     card; overflow-x:auto scrolls a single chip that is itself wider than the card
+     (chips never break mid-word). */
+  .chips { display: flex; flex-wrap: wrap; gap: .35rem; margin: .35rem 0;
+    min-width: 0; overflow-x: auto; }
   .chip { font-size: .72rem; font-weight: 500; padding: .2rem .55rem; border-radius: 999px;
     background: var(--accent-soft); color: var(--accent); border: 1px solid transparent;
-    overflow-wrap: anywhere; word-break: break-word; }
+    white-space: nowrap; }
   .chip.plain { background: var(--hover); color: var(--muted); }
   .krow { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); gap: .3rem .7rem;
     font-size: .82rem; margin: .15rem 0; }
