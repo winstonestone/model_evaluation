@@ -144,20 +144,28 @@
   .dv-bar button { font: inherit; padding: .4rem .9rem; border: 1px solid var(--line);
     border-radius: 8px; background: var(--card); color: var(--ink); cursor: pointer; }
   .dv-bar button:disabled { opacity: .4; cursor: default; }
-  .dv-row { display: flex; gap: 1rem; background: var(--card); border: 1px solid var(--line);
-    border-radius: 10px; padding: .9rem 1rem; margin-bottom: .8rem; }
-  .dv-row img { flex: 0 0 auto; max-width: 240px; max-height: 240px; border-radius: 8px;
-    object-fit: contain; background: var(--hover); }
-  .dv-cap { flex: 1; min-width: 0; }
-  .dv-ref { font-size: .9rem; margin-bottom: .5rem; white-space: pre-wrap; word-break: break-word; }
-  .dv-row details { font-size: .78rem; color: var(--muted); }
-  .dv-row details pre { white-space: pre-wrap; word-break: break-word; background: var(--bg);
-    border: 1px solid var(--line); border-radius: 8px; padding: .6rem; margin: .4rem 0 0; }
-  .dv-more { color: var(--accent); cursor: pointer; font-weight: 600; }
-  .krow { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); gap: .3rem .7rem;
-    font-size: .82rem; margin: .15rem 0; }
-  .krow dt { color: var(--muted); font-weight: 600; }
-  .krow dd { margin: 0; color: var(--ink); min-width: 0; }
+  /* HF-style spreadsheet grid */
+  .dv-grid-wrap { overflow: auto; border: 1px solid var(--line); border-radius: 10px;
+    max-height: 68vh; }
+  table.dv-grid { border-collapse: separate; border-spacing: 0; width: 100%;
+    font-size: .82rem; }
+  table.dv-grid thead th { position: sticky; top: 0; z-index: 1; background: var(--hover);
+    color: var(--muted); font-weight: 600; text-align: left; white-space: nowrap;
+    padding: .5rem .7rem; border-bottom: 1px solid var(--line); }
+  table.dv-grid td { padding: .5rem .7rem; border-bottom: 1px solid var(--line);
+    vertical-align: top; color: var(--ink); }
+  table.dv-grid tbody tr:last-child td { border-bottom: 0; }
+  table.dv-grid tbody tr:hover td { background: var(--hover); }
+  .dv-idx { color: var(--muted); text-align: right; white-space: nowrap;
+    font-variant-numeric: tabular-nums; }
+  .dv-cell { min-width: 8rem; max-width: 34rem; }
+  .dv-text { white-space: pre-wrap; word-break: break-word; overflow: hidden;
+    display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
+  .dv-cell.open .dv-text { -webkit-line-clamp: unset; display: block; }
+  .dv-clip { cursor: pointer; }
+  .dv-trunc { color: var(--muted); font-size: .74rem; margin-top: .2rem; }
+  .dv-grid img { max-width: 180px; max-height: 180px; border-radius: 6px;
+    object-fit: contain; background: var(--hover); display: block; }
   .taskcard section { border-top: 1px solid var(--line); margin-top: .85rem; padding-top: .7rem; }
   .taskcard h3 { font-size: .72rem; text-transform: uppercase; letter-spacing: .05em;
     color: var(--muted); margin: 0 0 .45rem; }
@@ -454,25 +462,31 @@ function dvFilter() {
 }
 function dvSearch(v) { dv.q = v; dv.offset = 0; renderDataRows(true); }
 function dvPage(d) { dv.offset = Math.max(0, dv.offset + d * PAGE); renderDataRows(); }
-function dvRowHtml(r) {
-  // any field extracted to a relative image path renders inline (image, image_url, …).
-  const img = Object.entries(r)
-    .filter(([k, v]) => k !== "__search" && typeof v === "string" && v.startsWith("img/"))
-    .map(([, v]) => `<img loading="lazy" src="${esc(dv.doc.__base + v)}" onerror="this.style.opacity=.25;this.alt='image unavailable'">`)
-    .join("");
-  const ref = r.reference != null ? String(r.reference) : "";
-  // long fields carry `<key>__full_len`; show preview + note.
-  const full = Object.keys(r).filter(k => k.endsWith("__full_len"));
-  const note = full.length ? `<div class="muted">Long fields truncated to a preview — see the source for full text.</div>` : "";
-  const fields = Object.fromEntries(Object.entries(r).filter(([k]) => k !== "__search"));
-  return `<div class="dv-row">${img}<div class="dv-cap">
-    <div class="dv-ref">${esc(ref)}</div>${note}
-    <details><summary>all fields</summary><pre>${esc(JSON.stringify(fields, null, 2))}</pre></details>
-  </div></div>`;
+// synthetic keys that are not real dataset columns.
+function dvIsMeta(k) { return k === "__search" || k.endsWith("__full_len"); }
+// column set = union of row keys (first-seen order), minus synthetic keys.
+function dvCols(rows) {
+  const cols = [];
+  for (const r of rows) for (const k of Object.keys(r))
+    if (!dvIsMeta(k) && !cols.includes(k)) cols.push(k);
+  return cols;
 }
+// one cell: image thumbnail, or clamp-on-3-lines text that expands on click.
+function dvCell(r, k) {
+  const v = r[k];
+  if (typeof v === "string" && v.startsWith("img/"))
+    return `<td class="dv-cell"><img loading="lazy" src="${esc(dv.doc.__base + v)}" onerror="this.style.opacity=.25;this.alt='image unavailable'"></td>`;
+  const text = v == null ? "" : String(v);
+  // a `<key>__full_len` companion means the value was truncated to a preview.
+  const flen = r[k + "__full_len"];
+  const trunc = typeof flen === "number" ? `<div class="dv-trunc">preview — full field is ${flen} chars</div>` : "";
+  return `<td class="dv-cell dv-clip" onclick="dvToggle(this)"><div class="dv-text">${esc(text)}</div>${trunc}</td>`;
+}
+function dvToggle(cell) { cell.classList.toggle("open"); }
 function renderDataRows(keepFocus) {
   const m = dv.doc.manifest || {}, all = dvFilter(), total = all.length;
   const page = all.slice(dv.offset, dv.offset + PAGE);
+  const cols = dvCols(all);
   const f = k => m[k] != null ? `<code>${esc(m[k])}</code>` : "—";
   const lic = dv.doc.license ? ` · license <code>${esc(dv.doc.license)}</code>` : "";
   const hf = dv.doc.hf_url ? ` · <a href="${esc(dv.doc.hf_url)}" target="_blank" rel="noopener">source ↗</a>` : "";
@@ -482,10 +496,16 @@ function renderDataRows(keepFocus) {
       <span class="muted">${total ? dv.offset + 1 : 0}–${Math.min(dv.offset + PAGE, total)} of ${total}${dv.q ? " matches" : ""}</span>
       <button onclick="dvPage(1)" ${dv.offset + PAGE >= total ? "disabled" : ""}>Next ›</button>
     </div>`;
+  const head = `<tr><th class="dv-idx">#</th>${cols.map(c => `<th>${esc(c)}</th>`).join("")}</tr>`;
+  const body = page.map((r, i) =>
+    `<tr><td class="dv-idx">${dv.offset + i}</td>${cols.map(c => dvCell(r, c)).join("")}</tr>`).join("");
+  const grid = total
+    ? `<div class="dv-grid-wrap"><table class="dv-grid"><thead>${head}</thead><tbody>${body}</tbody></table></div>`
+    : '<p class="muted">No matching rows.</p>';
   document.getElementById("modalBody").innerHTML =
     `<h2>${esc(dv.doc.dataset)}</h2>
      <div class="dv-meta">hf_id ${f("hf_id")} · config ${f("config")} · split ${f("split")} · revision ${f("revision")} · seed ${f("seed")} · ${total} rows${lic}${hf}</div>
-     ${bar}${page.map(dvRowHtml).join("") || '<p class="muted">No matching rows.</p>'}`;
+     ${bar}${grid}`;
   if (keepFocus) { const q = document.querySelector(".dv-search"); if (q) { q.focus(); q.setSelectionRange(q.value.length, q.value.length); } }
 }
 (function () {
