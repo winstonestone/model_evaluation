@@ -26,7 +26,7 @@ Automatically published after each evaluation. Local workspace remains the sourc
 | [Qwen: Qwen3.5-9B](https://huggingface.co/Qwen/Qwen3.5-9B) | qwen | 10B | multimodal | 2026-02-27 |
 | [Qwen: Qwen3.5-27B](https://huggingface.co/Qwen/Qwen3.5-27B) | qwen | 28B | multimodal | 2026-02-24 |
 
-## Watchlisted (96)
+## Watchlisted (97)
 
 | model | provider | params | modality | release date |
 | --- | --- | --- | --- | --- |
@@ -101,6 +101,7 @@ Automatically published after each evaluation. Local workspace remains the sourc
 | [Laguna-M.1-FP8](https://huggingface.co/poolside/Laguna-M.1-FP8) | poolside | 226B | text | 2026-04-24 |
 | [Qwen3.6-27B-FP8](https://huggingface.co/Qwen/Qwen3.6-27B-FP8) | Qwen | 28B | multimodal | 2026-04-21 |
 | [NVIDIA: Nemotron 3 Nano Omni (free)](https://huggingface.co/nvidia/Nemotron-3-Nano-Omni-30B-A3B-Reasoning-BF16) | nvidia | 33B | multimodal | 2026-04-20 |
+| [Qwen3.6-35B-A3B-FP8](https://huggingface.co/Qwen/Qwen3.6-35B-A3B-FP8) | Qwen | 36B | multimodal | 2026-04-15 |
 | [MiniMax-M2.7-NVFP4](https://huggingface.co/nvidia/MiniMax-M2.7-NVFP4) | nvidia | 116B | text | 2026-04-13 |
 | [MiniMax-M2.7-NVFP4](https://huggingface.co/lukealonso/MiniMax-M2.7-NVFP4) | lukealonso | 130B | text | 2026-04-12 |
 | [Trinity-Large-Thinking-NVFP4](https://huggingface.co/arcee-ai/Trinity-Large-Thinking-NVFP4) | arcee-ai | 203B | text | 2026-04-08 |
