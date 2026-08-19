@@ -166,8 +166,13 @@
   .dv-trunc { color: var(--muted); font-size: .74rem; margin-top: .2rem; }
   .dv-grid img { max-width: 180px; max-height: 180px; border-radius: 6px;
     object-fit: contain; background: var(--hover); display: block; }
-  /* used by the Tasks view (task card "View data ›" link + task-detail list) */
-  .dv-more { color: var(--accent); cursor: pointer; font-weight: 600; }
+  /* used by the Tasks view (task card "View data" pill + task-detail list) */
+  .dv-more { display: inline-flex; align-items: center; gap: .25rem; margin-left: .5rem;
+    padding: .1rem .5rem; font-size: .72rem; font-weight: 600; line-height: 1.4;
+    color: var(--accent); background: var(--card); border: 1px solid var(--accent);
+    border-radius: 999px; cursor: pointer; text-decoration: none; vertical-align: middle;
+    white-space: nowrap; transition: all .12s ease; }
+  .dv-more:hover { background: var(--accent); color: #fff; }
   .krow { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); gap: .3rem .7rem;
     font-size: .82rem; margin: .15rem 0; }
   .krow dt { color: var(--muted); font-weight: 600; }
