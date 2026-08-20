@@ -64,33 +64,13 @@
   .views button.active { background: var(--accent-soft); border-color: var(--accent);
     color: var(--accent); }
   .hidden { display: none !important; }
-  /* manage-tasks forms */
-  .manage { display: grid; gap: 1rem; max-width: 720px; }
+  /* manage-tasks view — a panel linking out to the task-manager app */
   .panel { background: var(--card); border: 1px solid var(--line); border-radius: 14px;
-    box-shadow: var(--shadow); padding: 1.25rem 1.35rem; }
+    box-shadow: var(--shadow); padding: 1.25rem 1.35rem; max-width: 720px; }
   .panel h2 { font-size: 1rem; margin: 0 0 .9rem; letter-spacing: -.01em; }
-  .field { display: grid; gap: .3rem; margin-bottom: .8rem; }
-  .field label { font-size: .78rem; font-weight: 600; color: var(--muted);
-    text-transform: uppercase; letter-spacing: .05em; }
-  .field input, .field textarea, .field select { font: inherit; padding: .55rem .7rem;
-    border: 1px solid var(--line); border-radius: 8px; background: var(--bg);
-    color: var(--ink); width: 100%; }
-  .field textarea { min-height: 4.5rem; resize: vertical; }
-  .btn { font: inherit; font-weight: 600; padding: .55rem 1.1rem; cursor: pointer;
-    border: 1px solid var(--accent); border-radius: 8px; background: var(--accent);
-    color: #fff; }
-  .btn:disabled { opacity: .5; cursor: not-allowed; }
-  .btn.danger { background: #dc2626; border-color: #dc2626; }
-  .btn.ghost { background: transparent; color: var(--accent); }
-  .authbar { display: flex; align-items: center; gap: .7rem; margin-bottom: 1rem;
-    font-size: .9rem; color: var(--muted); }
-  .note { font-size: .82rem; color: var(--muted); margin: .2rem 0 0; }
-  .toast { position: fixed; right: 1.25rem; bottom: 1.25rem; max-width: 360px;
-    background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--accent);
-    box-shadow: var(--shadow); border-radius: 10px; padding: .8rem 1rem; font-size: .88rem;
-    opacity: 0; transform: translateY(8px); transition: all .2s ease; pointer-events: none; }
-  .toast.show { opacity: 1; transform: translateY(0); }
-  .toast.err { border-left-color: #dc2626; }
+  .btn { display: inline-block; font: inherit; font-weight: 600; padding: .55rem 1.1rem;
+    cursor: pointer; border: 1px solid var(--accent); border-radius: 8px;
+    background: var(--accent); color: #fff; text-decoration: none; }
   /* tasks view — one definition card per eval task */
   /* min(340px, 100%) so a card never exceeds a narrow viewport. */
   .taskgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(340px, 100%), 1fr));
@@ -232,44 +212,18 @@
 </section>
 
 <section id="view-manage" class="hidden">
-  <div class="authbar" id="authbar"></div>
-  <div class="manage" id="manageForms">
-    <div class="panel">
-      <h2>Create a new eval task</h2>
-      <div class="field"><label>Task ID</label>
-        <input id="c_id" placeholder="e.g. sentiment-classification" autocomplete="off"></div>
-      <div class="field"><label>Name</label>
-        <input id="c_name" placeholder="Sentiment Classification" autocomplete="off"></div>
-      <div class="field"><label>Description</label>
-        <input id="c_desc" placeholder="Short one-line description" autocomplete="off"></div>
-      <div class="field"><label>Intent / dataset hints (the agent researches from this)</label>
-        <textarea id="c_intent" placeholder="What should this eval measure? Any dataset ideas, languages, constraints…"></textarea></div>
-      <button class="btn" data-act="create">Create task</button>
-      <p class="note">The agent researches datasets, authors the rubric &amp; judges, and runs a
-      smoke test — watch progress in Telegram.</p>
-    </div>
-
-    <div class="panel">
-      <h2>Update an existing task</h2>
-      <div class="field"><label>Task</label><select id="u_id"></select></div>
-      <div class="field"><label>Requested change</label>
-        <textarea id="u_intent" placeholder="e.g. raise sample_count to 200; swap in a newer dataset; tighten the safety gate…"></textarea></div>
-      <button class="btn" data-act="update">Request update</button>
-    </div>
-
-    <div class="panel">
-      <h2>Delete a task</h2>
-      <div class="field"><label>Task</label><select id="d_id"></select></div>
-      <button class="btn danger" data-act="delete">Delete task</button>
-      <p class="note">Irreversible. Removes the task and unlinks it from all models.</p>
-    </div>
+  <div class="panel" id="managePanel">
+    <h2>Create, update, or delete eval tasks</h2>
+    <p class="sub">Task management (with GitHub sign-in) runs on the secure task-manager app.
+    It opens in a new tab; the agent researches, validates, and smoke-tests every change —
+    watch progress in Telegram.</p>
+    <p id="manageLink"></p>
   </div>
 </section>
 
 <footer>Generated from local eval runs. Per-model pages and downloadable spreadsheets
 live under <code>tasks/</code>.</footer>
 </div>
-<div class="toast" id="toast"></div>
 <div id="tip"></div>
 <div id="dataModal" class="modal hidden">
   <div class="modal-card">
@@ -555,21 +509,12 @@ function renderDataRows(keepFocus) {
 })();
 
 // ---- Manage tasks -----------------------------------------------------------
-const API = "https://sieve-taskapi.tail8a6240.ts.net";  // public tunnel origin of the taskapi sidecar, or "" if unconfigured
+// The task-manager UI (GitHub sign-in + create/update/delete) is served by the
+// taskapi app itself, at its own origin — so its session cookie is first-party and
+// works in every browser. This read-only site just links to it; a cross-site form
+// here would break on third-party-cookie blocking. "https://sieve-taskapi.tail8a6240.ts.net" is that app's URL.
+const API = "https://sieve-taskapi.tail8a6240.ts.net";  // task-manager app origin, or "" if unconfigured
 
-function toast(msg, isErr) {
-  const el = document.getElementById("toast");
-  el.textContent = msg;
-  el.className = "toast show" + (isErr ? " err" : "");
-  setTimeout(() => { el.className = "toast" + (isErr ? " err" : ""); }, 5000);
-}
-function taskIds() {
-  return [...new Set(DATA.tasks.map(t => t.task))];
-}
-function fillTaskSelects() {
-  const opts = taskIds().map(id => `<option value="${id}">${id}</option>`).join("");
-  ["u_id", "d_id"].forEach(id => { document.getElementById(id).innerHTML = opts; });
-}
 function setView(v) {
   document.querySelectorAll("[id^='view-']").forEach(s =>
     s.classList.toggle("hidden", s.id !== "view-" + v));
@@ -577,83 +522,23 @@ function setView(v) {
     b.classList.toggle("active", b.dataset.v === v));
   if (v === "tasks") renderTasks();
   if (v === "data") renderDataPicker();
-  if (v === "manage") refreshAuth();
+  if (v === "manage") renderManage();
 }
 document.querySelectorAll("#views button").forEach(b =>
   b.onclick = () => setView(b.dataset.v));
 
-let me = null;  // logged-in GitHub login, or null
-function renderAuth() {
-  const bar = document.getElementById("authbar");
-  const forms = document.getElementById("manageForms");
-  if (!API) {
-    bar.innerHTML = "<span>Task management is not enabled on this deployment.</span>";
-    forms.classList.add("hidden");
-    return;
-  }
-  if (me) {
-    bar.innerHTML = `<span>Signed in as <strong>${me}</strong>.</span>`;
-    forms.classList.remove("hidden");
+function renderManage() {
+  const link = document.getElementById("manageLink");
+  if (API) {
+    link.innerHTML = `<a class="btn" href="${API}/" target="_blank" rel="noopener">`
+      + `Open the task manager &rarr;</a>`;
   } else {
-    bar.innerHTML = `<span>Sign in with GitHub to create, update, or delete tasks.</span>`
-      + `<a class="btn ghost" href="${API}/auth/login">Sign in with GitHub</a>`;
-    forms.classList.add("hidden");
+    link.innerHTML = `<span class="sub">Task management is not enabled on this deployment.</span>`;
   }
 }
-async function refreshAuth() {
-  if (!API) return renderAuth();
-  try {
-    const r = await fetch(API + "/auth/me", { credentials: "include" });
-    me = (await r.json()).login || null;
-  } catch { me = null; }
-  renderAuth();
-}
 
-async function submitAction(action) {
-  if (!me) return toast("Please sign in first.", true);
-  const body = { action };
-  if (action === "create") {
-    Object.assign(body, {
-      task_id: c_id.value.trim(), name: c_name.value.trim(),
-      description: c_desc.value.trim(), intent: c_intent.value.trim(),
-    });
-    if (!body.task_id || !body.name) return toast("Task ID and name are required.", true);
-  } else if (action === "update") {
-    Object.assign(body, { task_id: u_id.value, intent: u_intent.value.trim() });
-    if (!body.intent) return toast("Describe the change you want.", true);
-  } else if (action === "delete") {
-    body.task_id = d_id.value;
-    if (!confirm(`Delete task "${body.task_id}"? This is irreversible.`)) return;
-  }
-  const btn = document.querySelector(`[data-act="${action}"]`);
-  btn.disabled = true;
-  try {
-    const r = await fetch(API + "/tasks", {
-      method: "POST", credentials: "include",
-      headers: { "Content-Type": "application/json" }, body: JSON.stringify(body),
-    });
-    const j = await r.json().catch(() => ({}));
-    if (r.status === 202) toast(j.message || "Accepted — the agent is working.");
-    else if (r.status === 401) { me = null; renderAuth(); toast("Session expired — sign in again.", true); }
-    else toast(j.error || `Request failed (${r.status}).`, true);
-  } catch { toast("Could not reach the task service.", true); }
-  btn.disabled = false;
-}
-document.querySelectorAll("[data-act]").forEach(b =>
-  b.onclick = () => submitAction(b.dataset.act));
-
-// Post-OAuth redirect lands back here with ?login=ok|denied|error and #manage.
 (function () {
-  const p = new URLSearchParams(location.search);
-  const s = p.get("login");
-  if (s) {
-    if (s === "ok") toast("Signed in.");
-    else if (s === "denied") toast("That GitHub account is not permitted to manage tasks.", true);
-    else toast("Sign-in failed.", true);
-    history.replaceState(null, "", location.pathname + location.hash);
-  }
-  fillTaskSelects();
-  if (location.hash === "#manage" || s) setView("manage");
+  if (location.hash === "#manage") setView("manage");
   else if (location.hash === "#tasks") setView("tasks");
   else if (location.hash === "#data") setView("data");
 })();
