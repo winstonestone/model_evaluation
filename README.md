@@ -31,13 +31,15 @@ Automatically published after each evaluation. Local workspace remains the sourc
 | [Qwen: Qwen3.5-9B](https://huggingface.co/Qwen/Qwen3.5-9B) | qwen | 10B | multimodal | 2026-02-27 |
 | [Qwen: Qwen3.5-27B](https://huggingface.co/Qwen/Qwen3.5-27B) | qwen | 28B | multimodal | 2026-02-24 |
 
-## Watchlisted (100)
+## Watchlisted (102)
 
 | model | provider | params | modality | release date |
 | --- | --- | --- | --- | --- |
 | [Qwen3.8-27B-FP8](https://huggingface.co/Qwen/Qwen3.8-27B-FP8) | Qwen | 28B | multimodal | 2026-08-13 |
+| [granite-4.2-30b-fp8](https://huggingface.co/ibm-granite/granite-4.2-30b-fp8) | ibm-granite | 29B | text | 2026-08-13 |
 | [Ling-3.0-tiny-fp8](https://huggingface.co/inclusionAI/Ling-3.0-tiny-fp8) | inclusionAI | 8B | text | 2026-08-10 |
 | [Qwen3.8-2.4T-A95B-FP8](https://huggingface.co/Qwen/Qwen3.8-2.4T-A95B-FP8) | Qwen | 2446B | text | 2026-08-08 |
+| [granite-4.2-30b](https://huggingface.co/ibm-granite/granite-4.2-30b) | ibm-granite | 29B | text | 2026-08-07 |
 | [NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4-DSpark](https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4-DSpark) | nvidia | 1B | text | 2026-08-05 |
 | [Qwen3.8-27B-FP8](https://huggingface.co/huginnfork/Qwen3.8-27B-FP8) | huginnfork | 28B | multimodal | 2026-08-05 |
 | [Ling-3.0-flash-fp8](https://huggingface.co/inclusionAI/Ling-3.0-flash-fp8) | inclusionAI | 127B | text | 2026-08-04 |
