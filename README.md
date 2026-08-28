@@ -33,13 +33,14 @@ Automatically published after each evaluation. Local workspace remains the sourc
 | [Qwen: Qwen3.5-9B](https://huggingface.co/Qwen/Qwen3.5-9B) | qwen | 10B | multimodal | 2026-02-27 |
 | [Qwen: Qwen3.5-27B](https://huggingface.co/Qwen/Qwen3.5-27B) | qwen | 28B | multimodal | 2026-02-24 |
 
-## Watchlisted (112)
+## Watchlisted (113)
 
 | model | provider | params | modality | release date |
 | --- | --- | --- | --- | --- |
 | [GLM-5.3-Flash-FP8](https://huggingface.co/unsloth/GLM-5.3-Flash-FP8) | unsloth | 321B | multimodal | 2026-08-26 |
 | [granite-4.2-30b-NVFP4](https://huggingface.co/vcruz305/granite-4.2-30b-NVFP4) | vcruz305 | 15B | text | 2026-08-25 |
 | [Z.ai: GLM 5.3 Flash](https://huggingface.co/zai-org/GLM-5.3-Flash) | z-ai | 321B | multimodal | 2026-08-25 |
+| [Qwen3.8-Flash-Next-NVFP4](https://huggingface.co/RadixArk/Qwen3.8-Flash-Next-NVFP4) | RadixArk | 120B | multimodal | 2026-08-25 |
 | [Qwen3.8-Flash-Next](https://huggingface.co/Qwen/Qwen3.8-Flash-Next) | Qwen | 180B | multimodal | 2026-08-24 |
 | [Qwen3.8-Flash-Next-FP8](https://huggingface.co/Qwen/Qwen3.8-Flash-Next-FP8) | Qwen | 180B | multimodal | 2026-08-24 |
 | [Qwen3.8-27B-FP8](https://huggingface.co/Qwen/Qwen3.8-27B-FP8) | Qwen | 28B | multimodal | 2026-08-13 |
