@@ -2,10 +2,12 @@
 
 Automatically published after each evaluation. Local workspace remains the source of truth.
 
-## Evaluated (1)
+## Evaluated (3)
 
 | model | provider | params | modality | release date | evaluations |
 | --- | --- | --- | --- | --- | --- |
+| [gemma-4-26B-A4B-it](https://huggingface.co/google/gemma-4-26B-A4B-it) | google | 27B | multimodal | 2026-03-11 | — |
+| [Google: Gemma 4 26B A4B  (free)](https://huggingface.co/google/gemma-4-26B-A4B-it) | google | 26B | multimodal | 2026-03-11 | — |
 | [Qwen3.5-9B](https://huggingface.co/Qwen/Qwen3.5-9B) | Qwen | 10B | multimodal | 2026-02-27 | [image-captioning](tasks/image-captioning/qwen-qwen3-5-9b/), [summarization](tasks/summarization/qwen-qwen3-5-9b/) |
 
 ## Pending (24)
@@ -21,6 +23,7 @@ Automatically published after each evaluation. Local workspace remains the sourc
 | [Qwen: Qwen3.8 27B](https://huggingface.co/Qwen/Qwen3.8-27B) | qwen | 27B | multimodal | 2026-08-05 |
 | [NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16](https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16) | nvidia | 32B | text | 2026-08-01 |
 | [NVIDIA: Nemotron 3.5 Lightning](https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16) | nvidia | 32B | text | 2026-08-01 |
+| [NVIDIA: Nemotron 3.5 Lightning (free)](https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16) | nvidia | 32B | text | 2026-08-01 |
 | [LiquidAI: LFM2.5-2.6B (free)](https://huggingface.co/LiquidAI/LFM2.5-2.6B) | liquid | 3B | text | 2026-07-28 |
 | [Cohere: North Mini Code (free)](https://huggingface.co/CohereLabs/North-Mini-Code-1.0) | cohere | 30B | text | 2026-06-05 |
 | [NVIDIA: Nemotron 3.5 Content Safety (free)](https://huggingface.co/nvidia/Nemotron-3.5-Content-Safety) | nvidia | 4B | multimodal | 2026-05-22 |
@@ -31,18 +34,22 @@ Automatically published after each evaluation. Local workspace remains the sourc
 | [Qwen3.6-27B](https://huggingface.co/Qwen/Qwen3.6-27B) | Qwen | 28B | multimodal | 2026-04-21 |
 | [Qwen: Qwen3.6 27B](https://huggingface.co/Qwen/Qwen3.6-27B) | qwen | 28B | multimodal | 2026-04-21 |
 | [IBM: Granite 4.1 8B](https://huggingface.co/ibm-granite/granite-4.1-8b) | ibm-granite | 9B | text | 2026-04-06 |
-| [gemma-4-26B-A4B-it](https://huggingface.co/google/gemma-4-26B-A4B-it) | google | 27B | multimodal | 2026-03-11 |
 | [Google: Gemma 4 26B A4B ](https://huggingface.co/google/gemma-4-26B-A4B-it) | google | 27B | multimodal | 2026-03-11 |
 | [Google: Gemma 4 31B](https://huggingface.co/google/gemma-4-31B-it) | google | 31B | multimodal | 2026-03-11 |
 | [Qwen: Qwen3.5-9B](https://huggingface.co/Qwen/Qwen3.5-9B) | qwen | 10B | multimodal | 2026-02-27 |
 | [Qwen: Qwen3.5-27B](https://huggingface.co/Qwen/Qwen3.5-27B) | qwen | 28B | multimodal | 2026-02-24 |
 
-## Watchlisted (122)
+## Watchlisted (130)
 
 | model | provider | params | modality | release date |
 | --- | --- | --- | --- | --- |
+| [Inference.net: Schematron V2 Turbo](https://huggingface.co/inference-net/schematron-v2-granite-4.0-h-micro) | inference-net |  | text | 2026-09-14 |
+| [Inference.net: Schematron V2 Small](https://huggingface.co/inference-net/schematron-v2-llama-3.2-3b) | inference-net | 3B | text | 2026-09-14 |
+| [Intern-S2-397B](https://huggingface.co/internlm/Intern-S2-397B) | internlm | 403B | multimodal | 2026-09-13 |
 | [Nex AGI: Nex-N2.5-Pro (free)](https://huggingface.co/nex-agi/Nex-N2.5-Pro) | nex-agi |  | multimodal | 2026-09-08 |
 | [Nex-N2.5-mini-NVFP4](https://huggingface.co/ProCreations/Nex-N2.5-mini-NVFP4) | ProCreations | 19B | multimodal | 2026-09-08 |
+| [Ling-3.0-flash-VL-int4](https://huggingface.co/inclusionAI/Ling-3.0-flash-VL-int4) | inclusionAI | 125B | multimodal | 2026-09-08 |
+| [Ling-3.0-flash-VL-fp8](https://huggingface.co/inclusionAI/Ling-3.0-flash-VL-fp8) | inclusionAI | 125B | multimodal | 2026-09-08 |
 | [Qwen3.8-27B-NVFP4](https://huggingface.co/nvidia/Qwen3.8-27B-NVFP4) | nvidia | 18B | text | 2026-09-04 |
 | [Qwen3.8-Flash-Next-NVFP4](https://huggingface.co/nvidia/Qwen3.8-Flash-Next-NVFP4) | nvidia | 120B | multimodal | 2026-09-02 |
 | [Nemotron-3.5-Content-Safety-FP8-LLM-Compressor](https://huggingface.co/VitalyProtasov/Nemotron-3.5-Content-Safety-FP8-LLM-Compressor) | VitalyProtasov | 5B | multimodal | 2026-09-02 |
@@ -50,6 +57,7 @@ Automatically published after each evaluation. Local workspace remains the sourc
 | [Qwen-Drive-1.0-4B](https://huggingface.co/Qwen/Qwen-Drive-1.0-4B) | Qwen | 5B | multimodal | 2026-08-27 |
 | [DeepSeek-V4-Pro-0813-NVFP4](https://huggingface.co/nvidia/DeepSeek-V4-Pro-0813-NVFP4) | nvidia | 1650B | text | 2026-08-27 |
 | [Hy4-preview-FP8](https://huggingface.co/tencent/Hy4-preview-FP8) | tencent | 804B | text | 2026-08-27 |
+| [GLM-5.3-Flash-NVFP4](https://huggingface.co/RadixArk/GLM-5.3-Flash-NVFP4) | RadixArk | 168B | multimodal | 2026-08-27 |
 | [GLM-5.3-Flash-FP8](https://huggingface.co/unsloth/GLM-5.3-Flash-FP8) | unsloth | 321B | multimodal | 2026-08-26 |
 | [GLM-5.3-Flash-NVFP4](https://huggingface.co/LibertAIDAI/GLM-5.3-Flash-NVFP4) | LibertAIDAI | 165B | multimodal | 2026-08-26 |
 | [granite-4.2-30b-NVFP4](https://huggingface.co/vcruz305/granite-4.2-30b-NVFP4) | vcruz305 | 15B | text | 2026-08-25 |
@@ -59,7 +67,9 @@ Automatically published after each evaluation. Local workspace remains the sourc
 | [Qwen3.8-27B-FP8](https://huggingface.co/Qwen/Qwen3.8-27B-FP8) | Qwen | 28B | multimodal | 2026-08-13 |
 | [granite-4.2-30b-fp8](https://huggingface.co/ibm-granite/granite-4.2-30b-fp8) | ibm-granite | 29B | text | 2026-08-13 |
 | [granite-4.2-8b-fp8](https://huggingface.co/ibm-granite/granite-4.2-8b-fp8) | ibm-granite | 9B | text | 2026-08-13 |
+| [Kimi-K3-NVFP4](https://huggingface.co/nvidia/Kimi-K3-NVFP4) | nvidia | 1419B | text | 2026-08-13 |
 | [Ling-3.0-tiny-fp8](https://huggingface.co/inclusionAI/Ling-3.0-tiny-fp8) | inclusionAI | 8B | text | 2026-08-10 |
+| [Muse-Glimmer-30B-FP8-block](https://huggingface.co/RedHatAI/Muse-Glimmer-30B-FP8-block) | RedHatAI | 30B | multimodal | 2026-08-10 |
 | [Qwen3.8-2.4T-A95B-FP8](https://huggingface.co/Qwen/Qwen3.8-2.4T-A95B-FP8) | Qwen | 2446B | text | 2026-08-08 |
 | [granite-4.2-30b](https://huggingface.co/ibm-granite/granite-4.2-30b) | ibm-granite | 29B | text | 2026-08-07 |
 | [granite-4.2-3b](https://huggingface.co/ibm-granite/granite-4.2-3b) | ibm-granite | 4B | text | 2026-08-07 |
@@ -164,15 +174,18 @@ Automatically published after each evaluation. Local workspace remains the sourc
 | [DeepSeek-OCR-2](https://huggingface.co/deepseek-ai/DeepSeek-OCR-2) | deepseek-ai | 3B | multimodal | 2026-01-27 |
 | [medgemma-1.5-4b-it](https://huggingface.co/google/medgemma-1.5-4b-it) | google | 4B | multimodal | 2026-01-07 |
 
-## Oversized (59)
+## Oversized (68)
 
 | model | provider | params | modality | release date |
 | --- | --- | --- | --- | --- |
+| [DeepSeek-V4.1-Flash](https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash) | deepseek-ai | 485B | multimodal | 2026-09-10 |
 | [Nex AGI: Nex-N2.5-Mini (free)](https://huggingface.co/nex-agi/Nex-N2.5-mini) | nex-agi | 35B | text | 2026-09-08 |
+| [inclusionAI: Ling 3.0 Flash VL (free)](https://huggingface.co/inclusionAI/Ling-3.0-flash-VL) | inclusionai | 125B | multimodal | 2026-09-04 |
 | [DeepSeek-V4-Flash-Vision-Exp](https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash-Vision-Exp) | deepseek-ai | 305B | multimodal | 2026-08-31 |
 | [Tencent: Hy4 preview](https://huggingface.co/tencent/Hy4-preview) | tencent | 780B | text | 2026-08-27 |
 | [Z.ai: GLM 5.3 Flash](https://huggingface.co/zai-org/GLM-5.3-Flash) | z-ai | 321B | multimodal | 2026-08-25 |
 | [Z.ai: GLM 5.3 (batch)](https://huggingface.co/zai-org/GLM-5.3) | z-ai | 753B | text | 2026-08-25 |
+| [Z.ai: GLM 5.3 Flash (batch)](https://huggingface.co/zai-org/GLM-5.3-Flash) | z-ai | 321B | multimodal | 2026-08-25 |
 | [Qwen3.8-Flash-Next](https://huggingface.co/Qwen/Qwen3.8-Flash-Next) | Qwen | 180B | multimodal | 2026-08-24 |
 | [DeepSeek-V4-Pro-0813](https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro-0813) | deepseek-ai | 1650B | text | 2026-08-13 |
 | [DeepSeek: DeepSeek V4 Pro 0813](https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro-0813) | deepseek | 1650B | text | 2026-08-13 |
@@ -184,13 +197,18 @@ Automatically published after each evaluation. Local workspace remains the sourc
 | [DeepSeek-V4-Flash-0731](https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash-0731) | deepseek-ai | 304B | text | 2026-07-31 |
 | [DeepSeek: DeepSeek V4 Flash 0731](https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash-0731) | deepseek | 304B | text | 2026-07-31 |
 | [Thinking Machines: Inkling Small](https://huggingface.co/thinkingmachines/Inkling-Small) | thinkingmachines | 266B | multimodal | 2026-07-27 |
+| [Thinking Machines: Inkling Small (free)](https://huggingface.co/thinkingmachines/Inkling-Small) | thinkingmachines | 266B | multimodal | 2026-07-27 |
 | [Thinking Machines: Inkling](https://huggingface.co/thinkingmachines/Inkling) | thinkingmachines | 952B | multimodal | 2026-07-14 |
 | [Thinking Machines: Inkling (batch)](https://huggingface.co/thinkingmachines/Inkling) | thinkingmachines | 952B | multimodal | 2026-07-14 |
+| [Thinking Machines: Inkling (free)](https://huggingface.co/thinkingmachines/Inkling) | thinkingmachines | 952B | multimodal | 2026-07-14 |
 | [Poolside: Laguna S 2.1](https://huggingface.co/poolside/Laguna-S-2.1) | poolside | 118B | text | 2026-07-13 |
+| [Poolside: Laguna S 2.1 (free)](https://huggingface.co/poolside/Laguna-S-2.1) | poolside | 118B | text | 2026-07-13 |
 | [Tencent: Hy3](https://huggingface.co/tencent/Hy3) | tencent | 299B | text | 2026-07-02 |
 | [Poolside: Laguna XS 2.1](https://huggingface.co/poolside/Laguna-XS-2.1) | poolside | 33B | text | 2026-06-20 |
+| [Poolside: Laguna XS 2.1 (free)](https://huggingface.co/poolside/Laguna-XS-2.1) | poolside | 33B | text | 2026-06-20 |
 | [Z.ai: GLM 5.2](https://huggingface.co/zai-org/GLM-5.2) | z-ai | 753B | text | 2026-06-16 |
 | [Z.ai: GLM 5.2 (batch)](https://huggingface.co/zai-org/GLM-5.2) | z-ai | 753B | text | 2026-06-16 |
+| [Z.ai: GLM 5.2 (free)](https://huggingface.co/zai-org/GLM-5.2) | z-ai | 753B | text | 2026-06-16 |
 | [Poolside: Laguna M.1](https://huggingface.co/poolside/Laguna-M.1) | poolside | 226B | text | 2026-06-15 |
 | [MoonshotAI: Kimi K3](https://huggingface.co/moonshotai/Kimi-K3) | moonshotai | 2780B | multimodal | 2026-06-13 |
 | [MoonshotAI: Kimi K2.7 Code](https://huggingface.co/moonshotai/Kimi-K2.7-Code) | moonshotai | 1059B | multimodal | 2026-06-11 |
@@ -199,6 +217,7 @@ Automatically published after each evaluation. Local workspace remains the sourc
 | [Nex AGI: Nex-N2-Pro](https://huggingface.co/nex-agi/Nex-N2-Pro) | nex-agi | 397B | multimodal | 2026-06-03 |
 | [NVIDIA: Nemotron 3 Ultra](https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Ultra-550B-A55B-BF16) | nvidia | 561B | text | 2026-06-03 |
 | [NVIDIA: Nemotron 3 Ultra (batch)](https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Ultra-550B-A55B-BF16) | nvidia | 561B | text | 2026-06-03 |
+| [NVIDIA: Nemotron 3 Ultra (free)](https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Ultra-550B-A55B-BF16) | nvidia | 561B | text | 2026-06-03 |
 | [MiniMax: MiniMax M3](https://huggingface.co/MiniMaxAI/Minimax-M3) | minimax | 427B | multimodal | 2026-06-02 |
 | [MiniMax: MiniMax M3 (batch)](https://huggingface.co/MiniMaxAI/Minimax-M3) | minimax | 427B | multimodal | 2026-06-02 |
 | [StepFun: Step 3.7 Flash](https://huggingface.co/stepfun-ai/Step-3.7-Flash) | stepfun | 201B | multimodal | 2026-05-23 |
