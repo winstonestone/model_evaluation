@@ -47,10 +47,11 @@ Automatically published after each evaluation. Local workspace remains the sourc
 | [Qwen: Qwen3.5-35B-A3B](https://huggingface.co/Qwen/Qwen3.5-35B-A3B) | qwen | 36B | multimodal | 2026-02-24 |
 | [Qwen: Qwen3.5-27B](https://huggingface.co/Qwen/Qwen3.5-27B) | qwen | 28B | multimodal | 2026-02-24 |
 
-## Watchlisted (140)
+## Watchlisted (141)
 
 | model | provider | params | modality | release date |
 | --- | --- | --- | --- | --- |
+| [Intern-Decision-4B](https://huggingface.co/internlm/Intern-Decision-4B) | internlm | 5B | multimodal | 2026-09-26 |
 | [Qwen-Image-2.1-PE-T2I](https://huggingface.co/Qwen/Qwen-Image-2.1-PE-T2I) | Qwen | 9B | vision | 2026-09-20 |
 | [Qwen-Image-2.1-PE-T2I-FP8](https://huggingface.co/prithivMLmods/Qwen-Image-2.1-PE-T2I-FP8) | prithivMLmods | 9B | multimodal | 2026-09-20 |
 | [DeepSeek-V4.1-Flash-NVFP4](https://huggingface.co/nvidia/DeepSeek-V4.1-Flash-NVFP4) | nvidia | 763B | multimodal | 2026-09-16 |

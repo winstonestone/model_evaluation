@@ -10,7 +10,7 @@
 
 | term | meaning |
 | --- | --- |
-| llm_judge_dimension_mean_0_to_5 | For each sample, each valid LLM judge scores every graded rubric dimension from 0 to 5. The scorer averages judges per dimension, averages those graded dimensions into a sample score, then averages sample scores across the run. Binary gates such as Safety and Faithfulness are not included in this mean. |
+| llm_judge_dimension_mean_0_to_5 | For each sample, each valid LLM judge scores every graded rubric dimension from 0 to 5. The scorer averages judges per dimension, averages those graded dimensions into a sample score, then averages sample scores across the run. Gate scores are not included in this mean. |
 | llm_judge_pass_rate | The fraction of samples whose LLM-judge consensus passed: dimension mean is at least 3.0, no graded dimension is 0 or 1, and all binary/ranged gates pass. |
 | sample_id | A short hash of the frozen sample definition and selected dataset rows. Matching sample IDs mean runs are using the same frozen sample. |
 | model_supported_languages | Languages claimed by the model card or model metadata. If the model card describes broad support without enumerating every language, the workbook keeps the concise claim, such as 'over 140 languages'. |
