@@ -277,7 +277,14 @@ function cell(r, c, t) {
   return fmt(v);
 }
 function render() {
-  const t = DATA.tasks[cur];
+  const tasks = Array.isArray(DATA.tasks) ? DATA.tasks : [];
+  const t = tasks[cur];
+  if (!t) {
+    document.getElementById("head").innerHTML = "<th>Evaluation results</th>";
+    document.getElementById("body").innerHTML =
+      '<tr><td class="muted">No evaluation results have been published yet.</td></tr>';
+    return;
+  }
   const cols = t.columns;
   const rows = t.rows.slice();
   if (sortKey) rows.sort((r1, r2) => cmp(r1[sortKey], r2[sortKey], isNumCol(sortKey, t.rows), sortAsc));
@@ -302,8 +309,9 @@ function render() {
 }
 function renderTabs() {
   const el = document.getElementById("tabs");
-  if (DATA.tasks.length <= 1) { el.style.display = "none"; return; }
-  el.innerHTML = DATA.tasks.map((t, i) =>
+  const tasks = Array.isArray(DATA.tasks) ? DATA.tasks : [];
+  if (tasks.length <= 1) { el.style.display = "none"; return; }
+  el.innerHTML = tasks.map((t, i) =>
     `<button class="${i === cur ? "active" : ""}" data-i="${i}">${t.task}${
       t.mode !== "standard" ? " (" + t.mode + ")" : ""}</button>`).join("");
   el.querySelectorAll("button").forEach(b => b.onclick = () => {
