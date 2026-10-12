@@ -47,13 +47,14 @@ Automatically published after each evaluation. Local workspace remains the sourc
 | [Qwen: Qwen3.5-35B-A3B](https://huggingface.co/Qwen/Qwen3.5-35B-A3B) | qwen | 36B | multimodal | 2026-02-24 |
 | [Qwen: Qwen3.5-27B](https://huggingface.co/Qwen/Qwen3.5-27B) | qwen | 28B | multimodal | 2026-02-24 |
 
-## Watchlisted (147)
+## Watchlisted (149)
 
 | model | provider | params | modality | release date |
 | --- | --- | --- | --- | --- |
 | [Qwen-Image-2.1-Turbo](https://huggingface.co/Qwen/Qwen-Image-2.1-Turbo) | Qwen | 7B | vision | 2026-10-09 |
 | [DiarizationLM-Gemma-4-E4B-v1](https://huggingface.co/google/DiarizationLM-Gemma-4-E4B-v1) | google | 8B | multimodal | 2026-10-06 |
 | [AesCode-8B](https://huggingface.co/microsoft/AesCode-8B) | microsoft | 9B | multimodal | 2026-09-29 |
+| [AesCode-32B](https://huggingface.co/microsoft/AesCode-32B) | microsoft | 33B | multimodal | 2026-09-29 |
 | [Intern-Decision-4B](https://huggingface.co/internlm/Intern-Decision-4B) | internlm | 5B | multimodal | 2026-09-26 |
 | [Qwen-Image-2.1-PE-T2I](https://huggingface.co/Qwen/Qwen-Image-2.1-PE-T2I) | Qwen | 9B | vision | 2026-09-20 |
 | [Qwen-Image-2.1-PE-T2I-FP8](https://huggingface.co/prithivMLmods/Qwen-Image-2.1-PE-T2I-FP8) | prithivMLmods | 9B | multimodal | 2026-09-20 |
@@ -197,6 +198,7 @@ Automatically published after each evaluation. Local workspace remains the sourc
 | [Qwen3-Coder-Next-FP8](https://huggingface.co/Qwen/Qwen3-Coder-Next-FP8) | Qwen | 80B | text | 2026-02-01 |
 | [Kimi-K2.5-NVFP4](https://huggingface.co/nvidia/Kimi-K2.5-NVFP4) | nvidia |  | text | 2026-01-30 |
 | [DeepSeek-OCR-2](https://huggingface.co/deepseek-ai/DeepSeek-OCR-2) | deepseek-ai | 3B | multimodal | 2026-01-27 |
+| [1B-Tulu-full-autoround-4bit](https://huggingface.co/ParetoQaft/1B-Tulu-full-autoround-4bit) | ParetoQaft | 1B | text | 2026-01-11 |
 | [medgemma-1.5-4b-it](https://huggingface.co/google/medgemma-1.5-4b-it) | google | 4B | multimodal | 2026-01-07 |
 
 ## Oversized (71)
