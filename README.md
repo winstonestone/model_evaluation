@@ -2,13 +2,14 @@
 
 Automatically published after each evaluation. Local workspace remains the source of truth.
 
-## Evaluated (1)
+## Evaluated (2)
 
 | model | provider | params | modality | release date | evaluations |
 | --- | --- | --- | --- | --- | --- |
+| [granite-4.2-8b](https://huggingface.co/ibm-granite/granite-4.2-8b) | ibm-granite | 9B | text | 2026-08-07 | — |
 | [Poolside: Laguna XS 2.1](https://huggingface.co/poolside/Laguna-XS-2.1) | poolside | 33B | text | 2026-06-20 | — |
 
-## Pending (34)
+## Pending (33)
 
 | model | provider | params | modality | release date |
 | --- | --- | --- | --- | --- |
@@ -16,7 +17,6 @@ Automatically published after each evaluation. Local workspace remains the sourc
 | [inclusionAI: Ling 3.0 Tiny (free)](https://huggingface.co/inclusionAI/Ling-3.0-tiny) | inclusionai | 8B | text | 2026-08-10 |
 | [Meta: Muse Glimmer 30B](https://huggingface.co/meta-models/Muse-Glimmer-30B) | meta | 30B | multimodal | 2026-08-09 |
 | [Meta: Muse Glimmer 30B (batch)](https://huggingface.co/meta-models/Muse-Glimmer-30B) | meta | 30B | multimodal | 2026-08-09 |
-| [granite-4.2-8b](https://huggingface.co/ibm-granite/granite-4.2-8b) | ibm-granite | 9B | text | 2026-08-07 |
 | [IBM: Granite 4.2 8B](https://huggingface.co/ibm-granite/granite-4.2-8b) | ibm-granite | 9B | text | 2026-08-07 |
 | [Qwen3.8-27B](https://huggingface.co/Qwen/Qwen3.8-27B) | Qwen | 28B | multimodal | 2026-08-05 |
 | [Qwen: Qwen3.8 27B](https://huggingface.co/Qwen/Qwen3.8-27B) | qwen | 27B | multimodal | 2026-08-05 |
@@ -47,11 +47,13 @@ Automatically published after each evaluation. Local workspace remains the sourc
 | [Qwen: Qwen3.5-35B-A3B](https://huggingface.co/Qwen/Qwen3.5-35B-A3B) | qwen | 36B | multimodal | 2026-02-24 |
 | [Qwen: Qwen3.5-27B](https://huggingface.co/Qwen/Qwen3.5-27B) | qwen | 28B | multimodal | 2026-02-24 |
 
-## Watchlisted (144)
+## Watchlisted (147)
 
 | model | provider | params | modality | release date |
 | --- | --- | --- | --- | --- |
+| [Qwen-Image-2.1-Turbo](https://huggingface.co/Qwen/Qwen-Image-2.1-Turbo) | Qwen | 7B | vision | 2026-10-09 |
 | [DiarizationLM-Gemma-4-E4B-v1](https://huggingface.co/google/DiarizationLM-Gemma-4-E4B-v1) | google | 8B | multimodal | 2026-10-06 |
+| [AesCode-8B](https://huggingface.co/microsoft/AesCode-8B) | microsoft | 9B | multimodal | 2026-09-29 |
 | [Intern-Decision-4B](https://huggingface.co/internlm/Intern-Decision-4B) | internlm | 5B | multimodal | 2026-09-26 |
 | [Qwen-Image-2.1-PE-T2I](https://huggingface.co/Qwen/Qwen-Image-2.1-PE-T2I) | Qwen | 9B | vision | 2026-09-20 |
 | [Qwen-Image-2.1-PE-T2I-FP8](https://huggingface.co/prithivMLmods/Qwen-Image-2.1-PE-T2I-FP8) | prithivMLmods | 9B | multimodal | 2026-09-20 |
@@ -81,6 +83,7 @@ Automatically published after each evaluation. Local workspace remains the sourc
 | [granite-4.2-30b-NVFP4](https://huggingface.co/vcruz305/granite-4.2-30b-NVFP4) | vcruz305 | 15B | text | 2026-08-25 |
 | [Qwen3.8-Flash-Next-NVFP4](https://huggingface.co/RadixArk/Qwen3.8-Flash-Next-NVFP4) | RadixArk | 120B | multimodal | 2026-08-25 |
 | [Z.ai: GLM 5.3](https://huggingface.co/zai-org/GLM-5.3) | z-ai |  | text | 2026-08-25 |
+| [Qwen3.8-2.4T-A95B-NVFP4](https://huggingface.co/nvidia/Qwen3.8-2.4T-A95B-NVFP4) | nvidia | 1261B | text | 2026-08-25 |
 | [Qwen3.8-Flash-Next-FP8](https://huggingface.co/Qwen/Qwen3.8-Flash-Next-FP8) | Qwen | 180B | multimodal | 2026-08-24 |
 | [Qwen3.8-27B-FP8](https://huggingface.co/Qwen/Qwen3.8-27B-FP8) | Qwen | 28B | multimodal | 2026-08-13 |
 | [granite-4.2-30b-fp8](https://huggingface.co/ibm-granite/granite-4.2-30b-fp8) | ibm-granite | 29B | text | 2026-08-13 |
