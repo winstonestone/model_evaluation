@@ -22,5 +22,5 @@
 
 | metric | value |
 | --- | --- |
-| token_f1 | 0.5218 |
-| rouge_l | 0.2825 |
+| token_f1 | 0.5524 |
+| rouge_l | 0.2897 |
