@@ -6,7 +6,7 @@ Automatically published after each evaluation. Local workspace remains the sourc
 
 | model | provider | params | modality | release date | evaluations |
 | --- | --- | --- | --- | --- | --- |
-| [granite-4.2-8b](https://huggingface.co/ibm-granite/granite-4.2-8b) | ibm-granite | 9B | text | 2026-08-07 | — |
+| [granite-4.2-8b](https://huggingface.co/ibm-granite/granite-4.2-8b) | ibm-granite | 9B | text | 2026-08-07 | [summarization](tasks/summarization/ibm-granite-granite-4-2-8b/) |
 | [Poolside: Laguna XS 2.1](https://huggingface.co/poolside/Laguna-XS-2.1) | poolside | 33B | text | 2026-06-20 | — |
 
 ## Pending (33)
