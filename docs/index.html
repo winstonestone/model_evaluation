@@ -7,7 +7,7 @@
 <style>
   :root {
     --bg: #f8fafc; --card: #ffffff; --ink: #0f172a; --muted: #64748b;
-    --line: #e2e8f0; --hover: #f1f5f9; --accent: #4f46e5; --accent-soft: #eef2ff;
+    --line: #e2e8f0; --group-divider: #94a3b8; --hover: #f1f5f9; --accent: #4f46e5; --accent-soft: #eef2ff;
     --bar: #6366f1; --bar-track: #eef2ff; --shadow: 0 1px 3px rgba(15,23,42,.08),
       0 8px 24px rgba(15,23,42,.06);
   }
@@ -42,8 +42,11 @@
   thead th .arrow { opacity: 0; margin-left: .25rem; }
   thead th.sorted .arrow { opacity: 1; }
   .metric-groups th { position: static; background: var(--hover); cursor: default;
-    font-size: .78rem; text-transform: none; letter-spacing: 0; }
+    font-size: .78rem; text-transform: none; letter-spacing: 0;
+    border-bottom: 2px solid var(--group-divider); }
   .metric-groups th[data-group="judge"] { background: var(--accent-soft); color: var(--accent); }
+  #metricGroups th + th, #head th.group-start, #body td.group-start {
+    border-left: 2px solid var(--group-divider); }
   tbody td { padding: .7rem 1rem; border-bottom: 1px solid var(--line);
     vertical-align: middle; white-space: nowrap; }
   tbody tr:last-child td { border-bottom: 0; }
@@ -179,7 +182,7 @@
     padding: .7rem .8rem; margin: .5rem 0 0; overflow-x: auto; }
   @media (prefers-color-scheme: dark) {
     :root { --bg: #0b1120; --card: #0f172a; --ink: #e2e8f0; --muted: #94a3b8;
-      --line: #1e293b; --hover: #1e293b; --accent: #818cf8; --accent-soft: #1e1b4b;
+      --line: #1e293b; --group-divider: #64748b; --hover: #1e293b; --accent: #818cf8; --accent-soft: #1e1b4b;
       --bar: #818cf8; --bar-track: #1e293b;
       --shadow: 0 1px 3px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.3); }
   }
@@ -331,23 +334,27 @@ function render() {
     return;
   }
   const cols = METRIC_GROUPS.flatMap(([group]) => t.columns.filter(c => columnGroup(c) === group));
+  const isGroupStart = (column, index) => index > 0
+    && columnGroup(column) !== columnGroup(cols[index - 1]);
   document.getElementById("metricGroups").innerHTML = METRIC_GROUPS.map(([group, label]) => {
     const count = cols.filter(c => columnGroup(c) === group).length;
     return count ? `<th scope="colgroup" colspan="${count}" data-group="${group}">${label}</th>` : "";
   }).join("");
   const rows = t.rows.slice();
   if (sortKey) rows.sort((r1, r2) => cmp(r1[sortKey], r2[sortKey], isNumCol(sortKey, t.rows), sortAsc));
-  document.getElementById("head").innerHTML = cols.map(c => {
+  document.getElementById("head").innerHTML = cols.map((c, index) => {
     const numeric = isNumCol(c.key, t.rows) || barSpec(c.key);
     const n = numeric ? " num" : "";
     const sorted = c.key === sortKey ? " sorted" : "";
+    const boundary = isGroupStart(c, index) ? " group-start" : "";
     const arrow = c.key === sortKey ? (sortAsc ? "▲" : "▼") : "";
-    return `<th class="${n}${sorted}" data-k="${c.key}">${c.label}`
+    return `<th class="${n}${sorted}${boundary}" data-k="${c.key}">${c.label}`
       + `<span class="arrow">${arrow}</span></th>`;
   }).join("");
-  document.getElementById("body").innerHTML = rows.map(r => "<tr>" + cols.map(c => {
-    const cls = c.key === "model" ? "model"
+  document.getElementById("body").innerHTML = rows.map(r => "<tr>" + cols.map((c, index) => {
+    let cls = c.key === "model" ? "model"
       : (isNumCol(c.key, t.rows) || barSpec(c.key)) ? "num" : "";
+    if (isGroupStart(c, index)) cls += " group-start";
     return `<td class="${cls}">${cell(r, c, t)}</td>`;
   }).join("") + "</tr>").join("");
   document.querySelectorAll("#head th").forEach(th => th.onclick = () => {
