@@ -154,7 +154,7 @@
   .dv-trunc { color: var(--muted); font-size: .74rem; margin-top: .2rem; }
   .dv-grid img { max-width: 180px; max-height: 180px; border-radius: 6px;
     object-fit: contain; background: var(--hover); display: block; }
-  /* used by the Tasks view (task card "View data" pill + task-detail list) */
+  /* used by the Tasks view (task card "View dataset" pill + task-detail list) */
   .dv-more { display: inline-flex; align-items: center; gap: .25rem; margin-left: .5rem;
     padding: .1rem .5rem; font-size: .72rem; font-weight: 600; line-height: 1.4;
     color: var(--accent); background: var(--card); border: 1px solid var(--accent);
@@ -197,7 +197,7 @@
   <div class="views" id="views">
     <button data-v="board" class="active">Leaderboard</button>
     <button data-v="tasks">Tasks</button>
-    <button data-v="data">Data</button>
+    <button data-v="data">Datasets</button>
     <button data-v="manage">Manage tasks</button>
   </div>
 </header>
@@ -271,7 +271,7 @@ function selectedBoard() {
 }
 
 const METRIC_GROUPS = [
-  ["details", "Evaluation details"], ["quality", "Automatic quality metrics"],
+  ["details", "Evaluation details"], ["quality", "Quality metrics"],
   ["judge", "LLM judge metrics"], ["performance", "Performance metrics"],
 ];
 function columnGroup(column) {
@@ -406,8 +406,7 @@ function chips(items, cls, descs) {
     const tip = descs && descs[x];
     const c = tip ? base + " has-tip" : base;
     const attr = tip ? ` data-tip="${esc(tip)}"` : "";
-    const label = x === "llm_judge_mean_factor_score" ? "LLM Judge Mean Factor Score (0–5)" : x;
-    return `<span class="${c}"${attr}>${esc(label)}</span>`;
+    return `<span class="${c}"${attr}>${esc(x)}</span>`;
   }).join("");
 }
 // {`task/slug` -> sample index entry} for datasets that have a published viewer doc.
@@ -428,7 +427,7 @@ function datasetLi(d, taskId) {
     : esc(d.name);
   const sample = SAMPLES[taskId + "/" + d.slug];
   const view = sample
-    ? ` <a class="dv-more" href="#data" onclick="openData('${esc(taskId)}','${esc(d.slug)}');return false;">View data ›</a>`
+    ? ` <a class="dv-more" href="#data" onclick="openData('${esc(taskId)}','${esc(d.slug)}');return false;">View dataset ›</a>`
     : "";
   return `<li><span class="dsname">${name}</span>${view}`
     + (d.origin ? ` — <span class="dsmeta">${esc(d.origin)}</span>` : "")
@@ -467,7 +466,7 @@ function taskCard(t) {
     ${section("Datasets", ds ? `<ul class="dslist">${ds}</ul>` : "")}
     ${section("LLM judge metrics", judgeDetails && `${judgeDetails}${rubric}${t.judge_models?.length
       ? `<p class="sub">Judge models</p><div class="chips">${chips(t.judge_models, "plain")}</div>` : ""}`)}
-    ${section("Automatic quality metrics", chips(automated, null, d))}
+    ${section("Quality metrics", chips(automated, null, d))}
     ${section("Performance metrics", (groups.performance_metrics || []).length
       ? `<p class="sub">${groups.performance_enabled === false ? "Disabled for this task" : "Enabled after quality"}</p><div class="chips">${chips(groups.performance_metrics, null, d)}</div>` : "")}
   </div>`;
