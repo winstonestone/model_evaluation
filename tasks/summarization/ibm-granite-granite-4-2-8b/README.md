@@ -11,7 +11,7 @@
 | field | value |
 | --- | --- |
 | LLM judge pass rate | 1.0 |
-| LLM judge mean (0–5) | 5.0 |
+| LLM Judge Mean Factor Score (0–5) | 5.0 |
 | Result status | Quality + performance complete |
 | Samples | 2 |
 | Frozen sample | c907fe7a8442 |
